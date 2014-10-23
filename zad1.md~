@@ -19,11 +19,12 @@ Sprawdziłam ilość linii otrzymanych po przetworzeniu pliku:
 >wc -l Train_changed2.csv
 6034195 Train_changed2.csv
 ```
-##Zadanie 1.
-##a) Zaimportować, do systemów baz danych uruchomionych na swoim komputerze, danych z pliku Train.csv bazy:
-#*MongoDB
-#*PostgreSQL
-##b) Zliczyć liczbę zaimportowanych rekordów (Odpowiedź: powinno ich być 6_034_195).
+##Zadanie 1. a) b)
+a) Zaimportować, do systemów baz danych uruchomionych na swoim komputerze, danych z pliku Train.csv bazy:
+*MongoDB
+*PostgreSQL
+b) Zliczyć liczbę zaimportowanych rekordów (Odpowiedź: powinno ich być 6_034_195).
+========
 Wczytywanie do bazy MongoBD:
 ```sh
 time mongoimport -d train -c train --type csv --headerline --file Train_changed2.csv 

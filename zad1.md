@@ -24,6 +24,7 @@ a) Zaimportować, do systemów baz danych uruchomionych na swoim komputerze, dan
 *MongoDB
 *PostgreSQL
 b) Zliczyć liczbę zaimportowanych rekordów (Odpowiedź: powinno ich być 6_034_195).
+
 ========
 Wczytywanie do bazy MongoBD:
 ```sh
