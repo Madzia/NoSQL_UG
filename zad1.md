@@ -139,7 +139,9 @@ brak polecenia na stronie
 ========
 #e)
 
-
+```sh
+W trakcie tworzenia
+```
 
 ========
 #PostgreSQL
@@ -180,7 +182,9 @@ Time: 394345,551 ms
 
 #c)
 
-
+```sh
+W trakcie tworzenia
+```
 
 ===
 

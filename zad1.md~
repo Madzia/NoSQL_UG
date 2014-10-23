@@ -84,7 +84,6 @@ db=conn["train"]
 table=db["newone"]
 collection = db.train.find(timeout=False)
 for i in collection:
-    k+=1
     if not (type(i['Tags']) is unicode): continue
     tagi = i['Tags'].split()
     table.insert(i)
