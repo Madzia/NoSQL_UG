@@ -21,8 +21,8 @@ Sprawdziłam ilość linii otrzymanych po przetworzeniu pliku:
 ```
 ##Zadanie 1. a) b)
 a) Zaimportować, do systemów baz danych uruchomionych na swoim komputerze, danych z pliku Train.csv bazy:
--MongoDB
--PostgreSQL
+- MongoDB
+- PostgreSQL
 b) Zliczyć liczbę zaimportowanych rekordów (Odpowiedź: powinno ich być 6_034_195).
 
 ========
