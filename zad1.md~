@@ -126,7 +126,7 @@ db.newone.find().limit(2)
 Czasy:
 ```sh
 real  23m1.730s
-user  12m20.031s
+user  13m20.031s
 sys   0m14.311s
 ```
 
