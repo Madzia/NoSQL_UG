@@ -29,7 +29,8 @@ a) Zaimportować, do systemów baz danych uruchomionych na swoim komputerze, dan
 b) Zliczyć liczbę zaimportowanych rekordów (Odpowiedź: powinno ich być 6_034_195).
 
 ========
-Wczytywanie do bazy MongoBD:
+#MongoBD
+
 ```sh
 time mongoimport -d train -c train --type csv --headerline --file Train_changed2.csv 
 ```
@@ -59,6 +60,10 @@ switched to db train
 6034195
 ```
 
-
+========
+#PostgreSQL
+```sh
+wczytanie
+```
 
 
