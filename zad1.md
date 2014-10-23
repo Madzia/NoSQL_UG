@@ -19,6 +19,8 @@ Sprawdziłam ilość linii otrzymanych po przetworzeniu pliku:
 >wc -l Train_changed2.csv
 6034195 Train_changed2.csv
 ```
+========
+
 ##Zadanie 1. a) b)
 a) Zaimportować, do systemów baz danych uruchomionych na swoim komputerze, danych z pliku Train.csv bazy:
 - MongoDB
@@ -45,6 +47,7 @@ user	1m55.715s
 sys	0m14.405s
 ```
 ![image](zdj1.png)
+
 Przeliczenie ilości wystąpień w bazie:
 ```js
 >mongo

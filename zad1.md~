@@ -23,6 +23,7 @@ Sprawdziłam ilość linii otrzymanych po przetworzeniu pliku:
 a) Zaimportować, do systemów baz danych uruchomionych na swoim komputerze, danych z pliku Train.csv bazy:
 - MongoDB
 - PostgreSQL
+
 b) Zliczyć liczbę zaimportowanych rekordów (Odpowiedź: powinno ich być 6_034_195).
 
 ========
