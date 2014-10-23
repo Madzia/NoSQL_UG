@@ -60,7 +60,7 @@ real	9m23.553s
 user	1m55.715s
 sys	0m14.405s
 ```
-![image](zdj1.png)
+![image](screens/zdj1.png)
 
 Przeliczenie ilości wystąpień w bazie:
 ```js
@@ -75,18 +75,63 @@ switched to db train
 =======
 #c)
 
-Zadanie zostało wykonane przy pomocy PyMongo. Skrypt wykorzystany do zadania:
+Zadanie zostało wykonane przy pomocy PyMongo w programie PyCharm w języku programowania Python. Stworzony skrypt:
 ```sh
+from pymongo import Connection
 
+conn=Connection()
+db=conn["train"]
+table=db["newone"]
+collection = db.train.find(timeout=False)
+for i in collection:
+    k+=1
+    if not (type(i['Tags']) is unicode): continue
+    tagi = i['Tags'].split()
+    table.insert(i)
+    table.update({'_id': i['_id']},{'$set':{'Tags': tagi}},j=False)
+collection.close()
 ```
 
 Otrzymane wyniki:
 ```sh
+   ilość tagów: 17409994
+ różnych tagów: 42048
+```
 
+Sprawdzenie:
+```sh
+db.newone.find().limit(2)
+```
+
+```sh
+{ "Body" : "<p>I'd like to check if an uploaded file is an image file (e.g png, jpg, jpeg, gif, bmp) or another file. The problem is that I'm using Uploadify to upload the files, which changes the mime type and gives a 'text/octal' or something as the mime type, no matter which file type you upload.</p>  <p>Is there a way to check if the uploaded file is an image apart from checking the file extension using PHP?</p> ",
+"Id" : 1, 
+"Tags" : [ 
+	"php", 
+	"image-processing", 
+	"file-upload", 
+	"upload", 
+	"mime-types" ], 
+"Title" : "How to check if an uploaded file is an image without mime type?", 
+"_id" : ObjectId("5449207fec294e11edb4f1f4") }
+
+{ "Body" : "<p>In my favorite editor (vim), I regularly use ctrl-w to execute a certain action. Now, it quite often happens to me that firefox is the active window (on windows) while I still look at vim (thinking vim is the active window) and press ctrl-w which closes firefox. This is not what I want. Is there a way to stop ctrl-w from closing firefox?</p>  <p>Rene</p> ", 
+"Id" : 2, 
+"Tags" : [ 
+	"firefox" ], 
+"Title" : "How can I prevent firefox from closing when I press ctrl-w", 
+"_id" : ObjectId("5449207fec294e11edb4f1f5") }
+```
+
+Czasy:
+```sh
+real  23m1.730s
+user  12m20.031s
+sys   0m14.311s
 ```
 
 Wykorzystanie zasobów podczas przetwarzania pliku:
-![image](zdj3.png)
+![image](screens/zdj3.png)
 
 ========
 #d)
@@ -119,7 +164,7 @@ Time: 889515,013 ms
 ```
 czyli w przeliczeniu otrzymany został czas 14m49.515s
 
-![image](zdj2.png)
+![image](screens/zdj2.png)
 
 Przeliczenie ilości wystąpień w bazie:
 ```sh
