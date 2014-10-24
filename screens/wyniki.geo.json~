@@ -1,5 +1,3 @@
-{ "type": "FeatureCollection",
-    "features": [
 { "_id" : { "$oid" : "544a4c2df6552e11dea52a69" }, "loc" : { "type" : "Point", "coordinates" : [ 0.0037377856069111, 51.531951985733 ] }, "station" : "Abbey Road" }
 { "_id" : { "$oid" : "544a4c2df6552e11dea52a6a" }, "loc" : { "type" : "Point", "coordinates" : [ 0.12028637127604, 51.49078408041 ] }, "station" : "Abbey Wood" }
 { "_id" : { "$oid" : "544a4c2df6552e11dea52a6b" }, "loc" : { "type" : "Point", "coordinates" : [ -0.26767554257793, 51.516886963398 ] }, "station" : "Acton" }
@@ -608,5 +606,3 @@
 { "_id" : { "$oid" : "544a4c2df6552e11dea52cc6" }, "loc" : { "type" : "Point", "coordinates" : [ 0.06920830764764201, 51.489907107526 ] }, "station" : "Woolwich Arsenal" }
 { "_id" : { "$oid" : "544a4c2df6552e11dea52cc7" }, "loc" : { "type" : "Point", "coordinates" : [ 0.054626749936269, 51.491107787563 ] }, "station" : "Woolwich Dockyard" }
 { "_id" : { "$oid" : "544a4c2df6552e11dea52cc8" }, "loc" : { "type" : "Point", "coordinates" : [ -0.24556092484593, 51.381104516868 ] }, "station" : "Worcester Park" }
-]
-}
