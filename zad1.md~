@@ -1,4 +1,4 @@
-NoSQL_UG
+NoSQL_UG - Magdalena Sarzyńska
 ========
 
 #Wstęp
@@ -139,9 +139,46 @@ brak polecenia na stronie
 ========
 #e)
 
+Dane zostały pobranie ze [strony](http://www.doogal.co.uk/london_stations.php)w formacie csv zawierając położenia stacji w londynie.
+
+Następnie zostały wczytane do bazy mongo poleceniem:
 ```sh
-W trakcie tworzenia
+time mongoimport -d train -c train --type csv --headerline --file London\ stations.csv 
 ```
+
+Dane zostały przetworzone przy pomocy PyMongo w programie PyCharm w języku programowania Python. Stworzony skrypt:
+```sh
+from pymongo import Connection
+
+conn=Connection()
+db=conn["train"]
+table=db["newone"]
+collection = db.train.find(timeout=False)
+for i in collection:
+    geo = { "station": i["Station"],
+    "loc": { "type":"Point", "coordinates": [ i["Longitude"] , i["Latitude"] ] }
+    };
+    table.insert(geo)
+collection.close()
+```
+
+
+Oraz dodaję index:
+```sh
+db.newone.ensureIndex({"loc" : "2dsphere"})
+```
+
+Przykładowy wynik:
+```sh
+{ "_id" : ObjectId("544a4c2df6552e11dea52b44"), "loc" : { "type" : "Point", "coordinates" : [  -0.014848686252722,  51.477547665535 ] }, "station" : "Greenwich" }
+```
+
+Wszystkie [wyniki](screens/wyniki.json).
+
+
+#$near
+Wybieram punkt:
+
 
 ========
 #PostgreSQL
