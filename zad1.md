@@ -1,4 +1,4 @@
-NoSQL_UG
+NoSQL_UG - Magdalena Sarzyńska
 ========
 
 #Wstęp
