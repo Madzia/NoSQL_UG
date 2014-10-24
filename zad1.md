@@ -139,7 +139,7 @@ brak polecenia na stronie
 ========
 #e)
 
-Dane zostały pobranie ze [strony](http://www.doogal.co.uk/london_stations.php)w formacie csv zawierając położenia stacji w londynie.
+Dane zostały pobranie ze [strony](http://www.doogal.co.uk/london_stations.php) w formacie csv zawierając położenia stacji w londynie.
 
 Następnie zostały wczytane do bazy mongo poleceniem:
 ```sh
@@ -174,11 +174,13 @@ Przykładowy wynik:
 ```
 
 Wszystkie [wyniki](screens/wyniki.json).
+
+[mapa](screens/wyniki.geo.json)
  	
 #$near
 Wybieram punkt:
 ```sh
-var point = { "_id" : { "$oid" : "544a4c2df6552e11dea52a8a" }, "loc" : { "type" : "Point", "coordinates" : [ 0.061539705886513, 51.514376621471 ] }, "station" : "Beckton" }
+{ "_id" : { "$oid" : "544a4c2df6552e11dea52a8a" }, "loc" : { "type" : "Point", "coordinates" : [ 0.061539705886513, 51.514376621471 ] }, "station" : "Beckton" }
 ```
 
 ```sh
