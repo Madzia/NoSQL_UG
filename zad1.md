@@ -334,11 +334,3 @@ Time: 394345,551 ms
 
 ===
 
-#c)
-
-```sh
-W trakcie tworzenia
-```
-
-===
-
