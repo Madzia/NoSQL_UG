@@ -175,9 +175,7 @@ Przykładowy wynik:
 
 Wszystkie [wyniki](screens/wyniki.json).
 
-[mapa](screens/all_mapa.geojson)
-
-(screens/all_mapa.geojson)
+![mapa](screens/all_mapa.geojson)
  	
 #$near
 Wybieram punkt:
