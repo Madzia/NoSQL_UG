@@ -178,13 +178,9 @@ Wszystkie [wyniki](screens/wyniki.json).
 ![mapa](screens/all_mapa.geojson)
  	
 #$near
-Wybieram punkt:
+Wybieram punkt (Big Ben):
 ```sh
-{ "_id" : { "$oid" : "544a4c2df6552e11dea52a8a" }, "loc" : { "type" : "Point", "coordinates" : [ 0.061539705886513, 51.514376621471 ] }, "station" : "Beckton" }
-```
-
-```sh
-var point = { "type" : "Point", "coordinates" : [0.061539705886513, 51.514376621471 ]};
+var point = { "type" : "Point", "coordinates" : [-0.124625, 51.500729]};
 ```
 
 Wykonuję zapytanie:
@@ -196,21 +192,110 @@ Wynik:
 ```sh
 [
 	{
-		"_id" : ObjectId("544a4c2df6552e11dea52a8a"),
+		"_id" : ObjectId("544a4c2df6552e11dea52cb2"),
 		"loc" : {
 			"type" : "Point",
 			"coordinates" : [
-				0.061539705886513,
-				51.514376621471
+				-0.12498767440679,
+				51.501401606172
 			]
 		},
-		"station" : "Beckton"
+		"station" : "Westminster"
+	}
+]
+
+```
+
+Prezentacja wyników:
+![mapa](screens/Big_Ben_mapa.geojson)
+
+
+#$geoWithin
+Wykonuję zapytanie:
+```sh
+db.newone.find({ loc: {$geoWithin : { $center : [ [ -0.1213397,51.5169996 ] , 0.008] } }}).toArray();
+```
+wynik:
+```sh
+[
+	{
+		"_id" : ObjectId("544a4c2df6552e11dea52ae8"),
+		"loc" : {
+			"type" : "Point",
+			"coordinates" : [
+				-0.1244924862088,
+				51.512760249622
+			]
+		},
+		"station" : "Covent Garden"
+	},
+	{
+		"_id" : ObjectId("544a4c2df6552e11dea52b71"),
+		"loc" : {
+			"type" : "Point",
+			"coordinates" : [
+				-0.11982609759457,
+				51.517235749261
+			]
+		},
+		"station" : "Holborn"
+	},
+	{
+		"_id" : ObjectId("544a4c2df6552e11dea52c1e"),
+		"loc" : {
+			"type" : "Point",
+			"coordinates" : [
+				-0.12457578611157,
+				51.523013052867
+			]
+		},
+		"station" : "Russell Square"
 	}
 ]
 ```
+Prezentacja wyników:
+![mapa](screens/center_mapa.geojson)
 
+#$geoIntersects
+```sh
+var obszar = { "type" : "Polygon", "coordinates" : [ [ [ -0.125 , 51.53 ], [ -0.119 , 51.53 ], [ -0.119 , 51.5 ], [ -0.125 , 51.5 ], [ -0.125 , 51.53 ] ] ] };
 
+```
+Wykonuję zapytanie:
+```sh
+db.newone.find({ loc : { $geoIntersects : { $geometry : obszar } } }).toArray();
+```
 
+wynik (jeden z 6 elementów):
+```sh
+	{
+		"_id" : ObjectId("544a4c2df6552e11dea52b71"),
+		"loc" : {
+			"type" : "Point",
+			"coordinates" : [
+				-0.11982609759457,
+				51.517235749261
+			]
+		},
+		"station" : "Holborn"
+	}
+```
+Prezentacja wyników:
+![mapa](screens/polygon_mapa.geojson)
+
+#$geoIntersects
+
+```sh
+var linia = { "type": "LineString", "coordinates": [ [ -0.119 , 51.5 ] , [ -0.125 , 51.53 ] ] };
+```
+
+Wykonuję zapytanie:
+```sh
+db.newone.find({ loc : { $geoIntersects : { $geometry : linia } } }).toArray();
+```
+
+Prezentacja wyników:
+![mapa](screens/linia_mapa.geojson)
 
 ========
 #PostgreSQL
