@@ -11,20 +11,16 @@ Sprzęt: Procesor Intel Core i5-M 450 @ 2.40GHz × 4 Dysk HDD 500 GB. Pamięć R
 ##Zadanie 2.
 
 a) Wyszukać w sieci dane zawierające co najmniej 1_000_000 rekordów/jsonów.
-
 b) Dane zapisać w bazie MongoDB.
-
 c) Przygotować w JavaScript co najmniej cztery agregacje korzystające z Aggregation Pipeline.
-
 d) Zaprogramować i wykonać wszystkie agregacje z pkt. 3 w_innym niż JavaScript języku programowania. Skorzystać z jednego z driverów wymienionych na stronie MongoDB Drivers.
-
 e) Wyniki przedstawić w postaci tabelek, graficznej (wykresów, itp.).
 
 =======
 
 #zad 2. a)
 
-Dane zostały ściągnięte ze [strony](http://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption), link to pliku z danymi: [link](http://archive.ics.uci.edu/ml/machine-learning-databases/00235/household_power_consumption.zip) plik zip zawierający 2075259 rekordów z 9 atrybutami każdy. Plik zawiera informacje dotyczące zużycia prądu.
+Dane zostały ściągnięte ze (strony)[http://archive.ics.uci.edu/ml/datasets/Individual+household+electric+power+consumption], link to pliku z danymi: (link)[http://archive.ics.uci.edu/ml/machine-learning-databases/00235/household_power_consumption.zip] plik zip zawierający 2075259 rekordów z 9 atrybutami każdy. Plik zawiera informacje dotyczące zużycia prądu.
 
 Przykładowy rekord:
 ```sh
