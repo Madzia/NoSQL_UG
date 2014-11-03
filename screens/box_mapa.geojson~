@@ -5,7 +5,7 @@
 {"type":"Feature","proporties":{"station":"Langdon Park"},"geometry":{"type":"Point","coordinates":[-0.015199388573999,51.518883939693]}},
 {"type":"Feature","proporties":{"station":"Whitechapel"},"geometry":{"type":"Point","coordinates":[-0.059406074587337,51.519587792346]}},
 
-{"type": "Feature","geometry": {"type": "box","coordinates" : [ [ -0.075 , 51.515 ] , [0.12, 51.52] ]},"properties": {"name" : "Box"}}
+{"type": "Feature","geometry": {"type": "Box","coordinates" : [ [ -0.075 , 51.515 ] , [0.12, 51.52] ]},"properties": {"name" : "Box"}}
 
 ]
 }
