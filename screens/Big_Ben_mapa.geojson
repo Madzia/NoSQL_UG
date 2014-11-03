@@ -1,7 +1,7 @@
 {
 "type": "FeatureCollection",
 "features": [
-{"type":"Feature","proporties":{"station":"Westminster"},"geometry":{"type":"Point","coordinates":[-0.12498767440679,51.501401606172]}},
+{"type":"Feature","geometry":{"type":"Point","coordinates":[-0.12498767440679,51.501401606172]},"proporties":{"station":"Westminster"}}
 
 
 ]

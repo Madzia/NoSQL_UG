@@ -132,12 +132,10 @@ sys   0m14.311s
 Wykorzystanie zasobów podczas przetwarzania pliku:
 ![image](screens/zdj3.png)
 
-========
-#d)
-brak polecenia na stronie
 
 ========
-#e)
+
+#d)
 
 Dane zostały pobranie ze [strony](http://www.doogal.co.uk/london_stations.php) w formacie csv zawierając położenia stacji w londynie.
 
