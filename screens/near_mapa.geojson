@@ -1,0 +1,7 @@
+{
+"type": "FeatureCollection",
+"features": [
+{"type":"Feature","geometry":{"type":"Point","coordinates":[0.16096241569889,51.464780266606]},"proporties":{"station":"Barnehurst"}}
+]
+}
+

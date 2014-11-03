@@ -175,7 +175,7 @@ Wszystkie [wyniki](screens/wyniki.json).
 
 ![mapa](screens/all_mapa.geojson)
  	
-#$near
+#$near - v1
 Wybieram punkt (Big Ben):
 ```sh
 var point = { "type" : "Point", "coordinates" : [-0.124625, 51.500729]};
@@ -207,8 +207,38 @@ Wynik:
 Prezentacja wyników:
 ![mapa](screens/Big_Ben_mapa.geojson)
 
+#$near - v2
+Wybieram punkt:
+```sh
+var point = { "type" : "Point", "coordinates" : [0.16, 51.46]};
+```
 
-#$geoWithin
+Wykonuję zapytanie:
+```sh
+>db.newone2.find({ loc: {$near: {$geometry: point}, $maxDistance: 1000} }).toArray()
+```
+
+Wynik:
+```sh
+[
+	{
+		"_id" : ObjectId("5457be9800f4888e7410c5fd"),
+		"station" : "Barnehurst",
+		"loc" : {
+			"type" : "Point",
+			"coordinates" : [
+				0.16096241569889,
+				51.464780266606
+			]
+		}
+	}
+]
+```
+
+Prezentacja wyników:
+![mapa](screens/near_mapa.geojson)
+
+#$geoWithin - center
 Wykonuję zapytanie:
 ```sh
 db.newone.find({ loc: {$geoWithin : { $center : [ [ -0.1213397,51.5169996 ] , 0.008] } }}).toArray();
@@ -254,7 +284,54 @@ wynik:
 Prezentacja wyników:
 ![mapa](screens/center_mapa.geojson)
 
-#$geoIntersects
+
+#$geoWithin - Box
+Wykonuję zapytanie:
+```sh
+db.newone.find({ loc : { $geoWithin : { $box : [ [ -0.075 , 51.515 ] , [0.12, 51.52] ] } } }).toArray();
+```
+wynik:
+```sh
+[
+	{
+		"_id" : ObjectId("5457be9800f4888e7410c5eb"),
+		"station" : "Aldgate East",
+		"loc" : {
+			"type" : "Point",
+			"coordinates" : [
+				-0.072987053548915,
+				51.515081631079
+			]
+		}
+	},
+	{
+		"_id" : ObjectId("5457be9800f4888e7410c719"),
+		"station" : "Langdon Park",
+		"loc" : {
+			"type" : "Point",
+			"coordinates" : [
+				-0.015199388573999,
+				51.518883939693
+			]
+		}
+	},
+	{
+		"_id" : ObjectId("5457be9800f4888e7410c830"),
+		"station" : "Whitechapel",
+		"loc" : {
+			"type" : "Point",
+			"coordinates" : [
+				-0.059406074587337,
+				51.519587792346
+			]
+		}
+	}
+]
+```
+Prezentacja wyników:
+![mapa](screens/box_mapa.geojson)
+
+#$geoIntersects - Polygon
 ```sh
 var obszar = { "type" : "Polygon", "coordinates" : [ [ [ -0.125 , 51.53 ], [ -0.119 , 51.53 ], [ -0.119 , 51.5 ], [ -0.125 , 51.5 ], [ -0.125 , 51.53 ] ] ] };
 
@@ -281,7 +358,7 @@ wynik (jeden z 6 elementów):
 Prezentacja wyników:
 ![mapa](screens/polygon_mapa.geojson)
 
-#$geoIntersects
+#$geoIntersects - LineString
 
 ```sh
 var linia = { "type": "LineString", "coordinates": [ [ -0.119 , 51.5 ] , [ -0.125 , 51.53 ] ] };
