@@ -99,6 +99,10 @@ db.power.count()
 #Pipeline aggregation 1
 
 Sprawdzenie łącznego zapotrzebowania na prąd z taryfy nr 1 o danej porze (10 największych pozycji).
+
+#I) JavaScript
+
+Skrypt:
 ```js
 var coll = db.power;
 var result = coll.aggregate(
@@ -131,11 +135,60 @@ actions: 10
 	],
 	"ok" : 1
 }
-
+```
+Czasy: 
+```js
 real	0m2.912s
 user	0m0.030s
 sys	0m0.019s
 ```
+
+#II)Python
+
+Skrypt:
+```py
+from bson.son import SON
+from pymongo import Connection
+import json
+
+conn=Connection()
+db=conn["power"]
+result = db.power.aggregate([
+  { "$group": {"_id": {"Time": "$Time"}, "count": {"$sum": "$Sub_metering_1"}}},
+  { "$sort" : SON([("count" , -1)])},
+  { "$limit": 10}]
+)
+print json.dumps(result, indent=4)
+```
+
+Prezentacja wyników:
+```py
+{
+    "ok": 1.0, 
+    "result": [
+        {"count": 4906.0, "_id": {"Time": "20:53:00"}}, 
+        {"count": 4857.0, "_id": {"Time": "20:43:00"}}, 
+        {"count": 4808.0, "_id": {"Time": "20:52:00"}}, 
+        {"count": 4759.0, "_id": {"Time": "20:44:00"}}, 
+        {"count": 4754.0, "_id": {"Time": "20:49:00"}}, 
+        {"count": 4738.0, "_id": {"Time": "20:50:00"}}, 
+        {"count": 4712.0, "_id": {"Time": "20:54:00"}}, 
+        {"count": 4694.0, "_id": {"Time": "20:55:00"}}, 
+        {"count": 4643.0, "_id": {"Time": "21:42:00"}}, 
+        {"count": 4637.0, "_id": {"Time": "20:56:00"}}
+    ]
+}
+```
+Czasy:
+```py
+real    0m1.834s
+user    0m2.480s
+sys     0m0.126s
+```
+
+Prezentacja graficzna wyników:
+
+![image](screens/zad1bar.png)
 
 ------------------------------------------------------------------------------------------------wykres , python
 
