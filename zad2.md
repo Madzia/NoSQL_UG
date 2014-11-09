@@ -146,7 +146,7 @@ sys	0m0.019s
 #II)Python
 
 Skrypt:
-```py
+```js
 from bson.son import SON
 from pymongo import Connection
 import json
@@ -162,7 +162,7 @@ print json.dumps(result, indent=4)
 ```
 
 Prezentacja wyników:
-```py
+```js
 {
     "ok": 1.0, 
     "result": [
@@ -180,19 +180,19 @@ Prezentacja wyników:
 }
 ```
 Czasy:
-```py
+```js
 real    0m1.834s
 user    0m2.480s
-sys     0m0.126s
+sys	0m0.126s
 ```
 
 Prezentacja graficzna wyników:
 
 ![image](screens/zad1bar.png)
 
-------------------------------------------------------------------------------------------------wykres , python
-
 #Pipeline aggregation 2
+
+#I)JavaScript
 
 10 dat, kiedy najmniej korzystało się z taryfy 3  (10 najmniejszych pozycji).
 ```js
@@ -228,15 +228,65 @@ actions: 10
 	],
 	"ok" : 1
 }
-
+```
+Czasy:
+```js
 real	0m2.696s
 user	0m0.032s
 sys	0m0.020s
 ```
 
+#II)Python
+```js
+from bson.son import SON
+from pymongo import Connection
+import json
+
+conn=Connection()
+db=conn["power"]
+
+result = db.power.aggregate([
+  { "$group": {"_id": {"Date": "$Date"}, "count": {"$sum": "$Sub_metering_3"}}},
+  { "$sort" : SON([("count" , 1)])},
+  { "$limit": 10}])
+print json.dumps(result, indent=4)
+```
+
+Prezentacja wyników:
+```js
+{
+    "ok": 1.0, 
+    "result": [
+        {"count": 0, "_id": {"Date": "19/8/2010"}}, 
+        {"count": 0, "_id": {"Date": "26/9/2010"}}, 
+        {"count": 0, "_id": {"Date": "14/6/2009"}}, 
+        {"count": 0, "_id": {"Date": "21/8/2010"}}, 
+        {"count": 0, "_id": {"Date": "13/1/2010"}}, 
+        {"count": 0, "_id": {"Date": "18/8/2010"}}, 
+        {"count": 0, "_id": {"Date": "28/4/2007"}}, 
+        {"count": 0, "_id": {"Date": "29/4/2007"}}, 
+        {"count": 0, "_id": {"Date": "27/9/2010"}}, 
+        {"count": 0, "_id": {"Date": "20/8/2010"}}
+    ]
+}
+```
+Czasy:
+```js
+real    0m1.831s
+user    0m2.446s
+sys     0m0.170s
+```
+
+Prezentacja graficzna wyników:
+
+![image](screens/zad2bar.png)
+
+
 ------------------------------------------------------------------------------------------------wykres , python
 
 #Pipeline aggregation 3
+
+#I)JavaScript
 
 Najmniejsze 3 zurzycia taryfy 1 o danej godzinie.
 ```js
@@ -270,17 +320,23 @@ actions: 3
 	],
 	"ok" : 1
 }
-
+```
+Czasy:
+```js
 real	0m7.951s
 user	0m0.045s
 sys	0m0.012s
 
 ```
 
+#II)Python
+
 ------------------------------------------------------------------------------------------------wykres , python
 
 
 #Pipeline aggregation 4
+
+#I)JavaScript
 
 Dnia 12.12.2007 o której godzinie było największe zurzycie prądu (łącznie taryfa 1, 2 i 3) uszeregowane od największego (15 pierwszych pozycji.
 ```js
@@ -341,11 +397,15 @@ actions: 15
 	],
 	"ok" : 1
 }
-
+```
+Czasy:
+```js
 real	0m0.779s
 user	0m0.041s
 sys	0m0.015s
 ```
+
+#II)Python
 
 ------------------------------------------------------------------------------------------------wykres , python
 
