@@ -281,9 +281,6 @@ Prezentacja graficzna wyników:
 
 ![image](screens/zad2bar.png)
 
-
-------------------------------------------------------------------------------------------------wykres , python
-
 #Pipeline aggregation 3
 
 #I)JavaScript
@@ -330,9 +327,47 @@ sys	0m0.012s
 ```
 
 #II)Python
+```js
+from bson.son import SON
+from pymongo import Connection
+import json
 
-------------------------------------------------------------------------------------------------wykres , python
+conn=Connection()
+db=conn["power"]
 
+result = db.power.aggregate([
+  {"$project" : {
+	"hour": {"$substr" : ["$Time", 0, 2]},
+	"sub": {"Sub_metering_1": "$Sub_metering_1"}}},
+  { "$group": {"_id": {"hour": "$hour", "subd" : "$sub.Sub_metering_1"}}},
+  { "$group": {"_id": "$_id.hour", "count": {"$sum": "$_id.subd"}}},
+  { "$sort" : SON([("count" , 1)])},
+  { "$limit": 3}]);
+
+print json.dumps(result, indent=4)
+```
+
+Prezentacja wyników:
+```js
+{
+    "ok": 1.0, 
+    "result": [
+        {"count": 403.0, "_id": "06"}, 
+        {"count": 467.0,"_id": "05"}, 
+        {"count": 480.0,"_id": "04"}
+    ]
+}
+```
+Czasy:
+```js
+real    0m2.888s
+user    0m2.254s
+sys     0m0.227s
+```
+
+Prezentacja graficzna wyników:
+
+![image](screens/zad3bar.png)
 
 #Pipeline aggregation 4
 
