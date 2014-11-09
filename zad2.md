@@ -94,7 +94,7 @@ db.power.count()
 2075259
 ```
 
-#zad 2. c)
+#zad 2. c) d) e)
 
 #Pipeline aggregation 1
 
