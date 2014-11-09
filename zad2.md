@@ -441,6 +441,72 @@ sys	0m0.015s
 ```
 
 #II)Python
+```js
+from bson.son import SON
+from pymongo import Connection
+import json
 
-------------------------------------------------------------------------------------------------wykres , python
+conn=Connection()
+db=conn["power"]
+
+result = db.power.aggregate([
+  { "$match": { "Date" : "12/12/2007" } },
+  { "$project": {"_id": {
+      "Date" : "$Date",
+      "Time" : "$Time",
+      }, "wynik": { "$add": ["$Sub_metering_3","$Sub_metering_2", "$Sub_metering_1"]}}},
+  { "$sort" : {"wynik" : -1}},
+  { "$limit": 15}]);
+
+print json.dumps(result, indent=4)
+```
+
+Prezentacja wyników:
+```js
+{
+    "ok": 1.0, 
+    "result": [
+        {"_id": {"Date": "12/12/2007","Time": "14:04:00"}, 
+            "wynik": 41.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:10:00"}, 
+            "wynik": 41.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:06:00"}, 
+            "wynik": 41.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:05:00"}, 
+            "wynik": 41.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:09:00"}, 
+            "wynik": 41.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:11:00"}, 
+            "wynik": 41.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:12:00"}, 
+            "wynik": 41.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:08:00"}, 
+            "wynik": 40.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:07:00"}, 
+            "wynik": 40.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:14:00"}, 
+            "wynik": 40.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "14:13:00"}, 
+            "wynik": 40.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "15:32:00"}, 
+            "wynik": 40.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "15:29:00"}, 
+            "wynik": 40.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "15:24:00"}, 
+            "wynik": 40.0}, 
+        {"_id": {"Date": "12/12/2007","Time": "15:25:00"}, 
+            "wynik": 39.0}
+    ]
+}
+```
+Czasy:
+```js
+real    0m1.843s
+user    0m2.471s
+sys     0m0.139s
+```
+
+Prezentacja graficzna wyników:
+
+![image](screens/zad4bar.png)
 
