@@ -96,4 +96,203 @@ db.power.count()
 
 #zad 2. c)
 
+#Pipeline aggregation 1
+
+Sprawdzenie łącznego zapotrzebowania na prąd z taryfy nr 1 o danej porze (10 największych pozycji).
+```js
+var coll = db.power;
+var result = coll.aggregate(
+  { $group: {_id: {"Time": "$Time"}, count: {$sum: "$Sub_metering_1"}}},
+  { $sort : {count : -1}},
+  { $limit: 10});
+
+print("actions: " + result.result.length);
+printjson(result);
+```
+
+Prezentacja wyników:
+```js
+>time mongo power agg1.js
+MongoDB shell version: 2.4.9
+connecting to: power
+actions: 10
+{
+	"result" : [
+		{"_id" : {"Time" : "20:53:00"},	"count" : 4906},
+		{"_id" : {"Time" : "20:43:00"}, "count" : 4857},
+		{"_id" : {"Time" : "20:52:00"}, "count" : 4808},
+		{"_id" : {"Time" : "20:44:00"},	"count" : 4759},
+		{"_id" : {"Time" : "20:49:00"},	"count" : 4754},
+		{"_id" : {"Time" : "20:50:00"},	"count" : 4738},
+		{"_id" : {"Time" : "20:54:00"},	"count" : 4712},
+		{"_id" : {"Time" : "20:55:00"},	"count" : 4694},
+		{"_id" : {"Time" : "21:42:00"},	"count" : 4643},
+		{"_id" : {"Time" : "20:56:00"},	"count" : 4637}
+	],
+	"ok" : 1
+}
+
+real	0m2.912s
+user	0m0.030s
+sys	0m0.019s
+```
+
+------------------------------------------------------------------------------------------------wykres , python
+
+#Pipeline aggregation 2
+
+10 dat, kiedy najmniej korzystało się z taryfy 3  (10 najmniejszych pozycji).
+```js
+var coll = db.power;
+
+var result = coll.aggregate(
+  { $group: {_id: {"Date": "$Date"}, count: {$sum: "$Sub_metering_3"}}},
+  { $sort : {count : 1}},
+  { $limit: 10});
+
+print("actions: " + result.result.length);
+printjson(result);
+```
+
+Prezentacja wyników:
+```js
+>time mongo power agg2.js
+MongoDB shell version: 2.4.9
+connecting to: power
+actions: 10
+{
+	"result" : [
+		{"_id" : {"Date" : "19/8/2010"},"count" : 0},
+		{"_id" : {"Date" : "26/9/2010"},"count" : 0},
+		{"_id" : {"Date" : "14/6/2009"},"count" : 0},
+		{"_id" : {"Date" : "21/8/2010"},"count" : 0},
+		{"_id" : {"Date" : "13/1/2010"},"count" : 0},
+		{"_id" : {"Date" : "18/8/2010"},"count" : 0},
+		{"_id" : {"Date" : "28/4/2007"},"count" : 0},
+		{"_id" : {"Date" : "29/4/2007"},"count" : 0},
+		{"_id" : {"Date" : "27/9/2010"},"count" : 0},
+		{"_id" : {"Date" : "20/8/2010"},"count" : 0}
+	],
+	"ok" : 1
+}
+
+real	0m2.696s
+user	0m0.032s
+sys	0m0.020s
+```
+
+------------------------------------------------------------------------------------------------wykres , python
+
+#Pipeline aggregation 3
+
+Najmniejsze 3 zurzycia taryfy 1 o danej godzinie.
+```js
+var coll = db.power;
+
+var result = coll.aggregate(
+  {$project : {
+	hour: {$substr : ["$Time", 0, 2]},
+	sub: {"Sub_metering_1": "$Sub_metering_1"}
+  }},
+{ $group: {_id: {"hour": "$hour", subd : "$sub.Sub_metering_1"}}},
+{ $group: {_id: "$_id.hour", count: {$sum: "$_id.subd"}}},
+  { $sort : {count : 1}},
+  { $limit: 3});
+
+print("actions: " + result.result.length);
+printjson(result);
+```
+
+Prezentacja wyników:
+```js
+> time mongo power agg3.js
+MongoDB shell version: 2.4.9
+connecting to: power
+actions: 3
+{
+	"result" : [
+		{"_id" : "06", "count" : 403},
+		{"_id" : "05", "count" : 467},
+		{"_id" : "04", "count" : 480}
+	],
+	"ok" : 1
+}
+
+real	0m7.951s
+user	0m0.045s
+sys	0m0.012s
+
+```
+
+------------------------------------------------------------------------------------------------wykres , python
+
+
+#Pipeline aggregation 4
+
+Dnia 12.12.2007 o której godzinie było największe zurzycie prądu (łącznie taryfa 1, 2 i 3) uszeregowane od największego (15 pierwszych pozycji.
+```js
+var coll = db.power;
+
+var result = coll.aggregate(
+{ $match: { "Date" : "12/12/2007" } },
+{ $project: {_id: {
+"Date" : "$Date",
+"Time" : "$Time",
+}, wynik: { $add: ["$Sub_metering_3","$Sub_metering_2", "$Sub_metering_1"]}}},
+  { $sort : {wynik : -1}},
+  { $limit: 15});
+
+print("actions: " + result.result.length);
+printjson(result);
+```
+
+
+Prezentacja wyników:
+```js
+> time mongo power agg4.js
+MongoDB shell version: 2.4.9
+connecting to: power
+actions: 15
+{
+	"result" : [
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:04:00"},
+			"wynik" : 41},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:10:00"},
+			"wynik" : 41},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:06:00"},
+			"wynik" : 41},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:05:00"},
+			"wynik" : 41},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:09:00"},
+			"wynik" : 41},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:11:00"},
+			"wynik" : 41},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:12:00"},
+			"wynik" : 41},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:08:00"},
+			"wynik" : 40},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:07:00"},
+			"wynik" : 40},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:14:00"},
+			"wynik" : 40},
+		{"_id" : {"Date" : "12/12/2007","Time" : "14:13:00"},
+			"wynik" : 40},
+		{"_id" : {"Date" : "12/12/2007","Time" : "15:32:00"},
+			"wynik" : 40},
+		{"_id" : {"Date" : "12/12/2007","Time" : "15:29:00"},
+			"wynik" : 40},
+		{"_id" : {"Date" : "12/12/2007","Time" : "15:24:00"},
+			"wynik" : 40},
+		{"_id" : {"Date" : "12/12/2007","Time" : "15:25:00"},
+			"wynik" : 39}
+	],
+	"ok" : 1
+}
+
+real	0m0.779s
+user	0m0.041s
+sys	0m0.015s
+```
+
+------------------------------------------------------------------------------------------------wykres , python
 
