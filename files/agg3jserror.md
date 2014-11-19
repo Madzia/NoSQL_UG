@@ -1,3 +1,4 @@
+```js
 MongoDB shell version: 2.8.0-rc0
 connecting to: power2
 {
@@ -115,3 +116,4 @@ connecting to: power2
     return this;
 }
 }
+```
