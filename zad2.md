@@ -289,6 +289,14 @@ Prezentacja graficzna wyników:
 
 ![image](screens/zad2bar.png)
 
+#III)Porównanie czasów
+
+|    |   JavaScript    |   Python   |
+|----|-----------------|------------|
+|real|	0m2.696s       |  0m1.831s  |
+|user|	0m0.032s       |  0m2.446s  |
+|sys |	0m0.020s       |  0m0.170s  |
+
 #Pipeline aggregation 3
 
 #I)JavaScript
@@ -376,6 +384,14 @@ sys     0m0.227s
 Prezentacja graficzna wyników:
 
 ![image](screens/zad3bar.png)
+
+#III)Porównanie czasów
+
+|    |   JavaScript    |   Python   |
+|----|-----------------|------------|
+|real|	0m7.951s       |  0m2.888s  |
+|user|	0m0.045s       |  0m2.254s  |
+|sys |	0m0.012s       |  0m0.227s  |
 
 #Pipeline aggregation 4
 
@@ -517,4 +533,12 @@ sys     0m0.139s
 Prezentacja graficzna wyników:
 
 ![image](screens/zad4bar.png)
+
+#III)Porównanie czasów
+
+|    |   JavaScript    |   Python   |
+|----|-----------------|------------|
+|real|	0m0.779s       |  0m1.843s  |
+|user|	0m0.041s       |  0m2.471s  |
+|sys |	0m0.015s       |  0m0.139s  |
 
