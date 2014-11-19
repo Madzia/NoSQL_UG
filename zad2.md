@@ -229,7 +229,7 @@ Czasy dla Mongo v 2.4.12:
 real    0m1.834s
 user    0m2.480s
 sys	0m0.126s
-
+```
 Czasy dla Mongo v 2.8.0-rc0:
 ```js
 real    0m2.869s
