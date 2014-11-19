@@ -42,7 +42,7 @@ d) Brak polecenia.
 e) Wyszukać w sieci dane zawierające obiekty GeoJSON. Następnie dane zapisać w bazie MongoDB.
 
 ========
-#MongoBD
+#MongoBD v 2.4.12
 #Zad1 a) b)
 ```sh
 time mongoimport -d train -c train --type csv --headerline --file Train_changed2.csv 
@@ -68,6 +68,37 @@ Przeliczenie ilości wystąpień w bazie:
 6034195
 ```
 
+========
+#MongoBD v 2.8.0-rc0
+#Zad1 a) b)
+```sh
+time ./mongoimport -d train -c train --type csv --headerline --file ~/Pobrane/Train_changed2.csv 
+```
+Wynik operacji:
+```sh
+2014-11-19T17:43:06.267+0100	Progress: 6010000 documents inserted...
+2014-11-19T17:43:06.807+0100	Progress: 6020000 documents inserted...
+2014-11-19T17:43:07.617+0100	Progress: 6030000 documents inserted...
+2014-11-19T17:43:08.406+0100	imported 6034195 documents
+```
+Czasy:
+```sh
+real	11m26.828s
+user	8m32.698s
+sys	0m56.580s
+```
+![image](screens/zdj1mt.png)
+
+Przeliczenie ilości wystąpień w bazie:
+```js
+>./mongo
+MongoDB shell version: 2.8.0-rc0
+dconnecting to: test
+>use train
+switched to db train
+> db.train.count()
+6034195
+```
 
 ========
 #PostgreSQL
@@ -110,10 +141,11 @@ Time: 394345,551 ms
 | Baza Danych          |                    Czas                             |
 |----------------------|-----------------------------------------------------|
 |   MongoDB v 2.4.12   | real: 9m23.553s    user: 1m55.715s   sys: 0m14.405s |
+| MongoDB v 2.8.0-rc0  | real: 11m26.828s   user: 8m32.698s   sys: 0m56.580s |
 | PostgreSQL           |                 394345,551 ms (6m36.345s)           |
 
 =======
-#MongoBD
+#MongoBD v 2.4.12
 #c)
 
 Zadanie zostało wykonane przy pomocy PyMongo w programie PyCharm w języku programowania Python. Stworzony skrypt:
