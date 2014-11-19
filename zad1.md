@@ -64,15 +64,60 @@ sys	0m14.405s
 
 Przeliczenie ilości wystąpień w bazie:
 ```js
->mongo
-MongoDB shell version: 2.4.9
-connecting to: test
-> use train
-switched to db train
 > db.train.count()
 6034195
 ```
+
+
+========
+#PostgreSQL
+#Zad1 a) b)
+początkowo trzeba stworzyć tabelę:
+```sh
+>psql magda
+>>CREATE TABLE train (Id serial PRIMARY KEY, Title VARCHAR, Body VARCHAR, Tags VARCHAR);
+```
+
+PostgreSQL umożliwia mieżenie czasu komendą:
+```sh
+>\timing
+```
+
+w wyniku czego otrzymany został czas oraz automatycznie wynik zliczenia wszystkich wierszy:
+```sh
+magda=# COPY train (Id, Title, Body, Tags) FROM '/home/magda/Pobrane/Train_changed2.csv' WITH DELIMITER ',' CSV HEADER;
+COPY 6034195
+Time: 889515,013 ms
+```
+czyli w przeliczeniu otrzymany został czas 14m49.515s
+
+![image](screens/zdj2.png)
+
+Przeliczenie ilości wystąpień w bazie:
+```sh
+>SELECT COUNT(*) FROM train;
+  count
+`---------
+ 6034195
+(1 row)
+
+Time: 394345,551 ms
+```
+
+#Zestawienie wyników
+
+
+|-------------|-----------------------------------------------------|
+| Baza Danych |                    Czas                             |
+|-------------|-----------------------------------------------------|
+|   MongoDB   | real: 9m23.553s    user: 1m55.715s   sys: 0m14.405s |
+|  v 2.4.12   |                                                     |
+|-------------|-----------------------------------------------------|
+| PostgreSQL  |                 394345,551 ms (6m36.345s)           |
+|-------------|-----------------------------------------------------|
+
 =======
+#MongoBD
 #c)
 
 Zadanie zostało wykonane przy pomocy PyMongo w programie PyCharm w języku programowania Python. Stworzony skrypt:
@@ -371,41 +416,4 @@ db.newone.find({ loc : { $geoIntersects : { $geometry : linia } } }).toArray();
 
 Prezentacja wyników:
 ![mapa](screens/linia_mapa.geojson)
-
-========
-#PostgreSQL
-#Zad1 a) b)
-początkowo trzeba stworzyć tabelę:
-```sh
->psql magda
->>CREATE TABLE train (Id serial PRIMARY KEY, Title VARCHAR, Body VARCHAR, Tags VARCHAR);
-```
-
-PostgreSQL umożliwia mieżenie czasu komendą:
-```sh
->\timing
-```
-
-w wyniku czego otrzymany został czas oraz automatycznie wynik zliczenia wszystkich wierszy:
-```sh
-magda=# COPY train (Id, Title, Body, Tags) FROM '/home/magda/Pobrane/Train_changed2.csv' WITH DELIMITER ',' CSV HEADER;
-COPY 6034195
-Time: 889515,013 ms
-```
-czyli w przeliczeniu otrzymany został czas 14m49.515s
-
-![image](screens/zdj2.png)
-
-Przeliczenie ilości wystąpień w bazie:
-```sh
->SELECT COUNT(*) FROM train;
-  count
-`---------
- 6034195
-(1 row)
-
-Time: 394345,551 ms
-```
-
-===
 
