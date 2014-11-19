@@ -94,6 +94,43 @@ db.power.count()
 2075259
 ```
 
+
+Wczytywanie danych do bazy Mongo:
+```sh
+time ./mongoimport -d power2 -c power2 --type csv --headerline --file ~/Pobrane/power.txt
+```
+
+Wynik operacji:
+```sh
+2014-11-19T18:01:17.973+0100	Progress: 2050000 documents inserted...
+2014-11-19T18:01:18.203+0100	Progress: 2060000 documents inserted...
+2014-11-19T18:01:18.424+0100	Progress: 2070000 documents inserted...
+2014-11-19T18:01:21.605+0100	imported 2075259 documents
+```
+
+Czasy:
+```sh
+real	1m16.006s
+user	1m28.382s
+sys	0m7.880s
+```
+
+Oraz przeliczenie wprowadzonych danych:
+```sh
+MongoDB shell version: 2.8.0-rc0
+connecting to: test
+> use power2
+switched to db power2
+> db.power2.count()
+2075259
+> 
+```
+
+| Baza Danych          |                    Czas                             |
+|----------------------|-----------------------------------------------------|
+|   MongoDB v 2.4.12   | real: 1m1.264s    user: 0m6.460s     sys: 0m1.388s  |
+| MongoDB v 2.8.0-rc0  | real: 1m16.006s   user: 1m28.382s    sys: 0m7.880s  |
+
 #zad 2. c) d) e)
 
 #Pipeline aggregation 1
@@ -136,12 +173,20 @@ actions: 10
 	"ok" : 1
 }
 ```
-Czasy: 
+Czasy dla Mongo v 2.4.12: 
 ```js
 real	0m2.912s
 user	0m0.030s
 sys	0m0.019s
 ```
+
+Czasy dla Mongo v 2.8.0-rc0:
+```
+real	0m2.866s
+user	0m0.048s
+sys	0m0.008s
+```
+Jak widać dla Mongo w wersji 2.8.0-rc0 wyniki [image](files/agg1jserror.md) są w odwrotnej kolejności, po nich zaś następują błędy.
 
 #II)Python
 
@@ -179,11 +224,17 @@ Prezentacja wyników:
     ]
 }
 ```
-Czasy:
+Czasy dla Mongo v 2.4.12:
 ```js
 real    0m1.834s
 user    0m2.480s
 sys	0m0.126s
+
+Czasy dla Mongo v 2.8.0-rc0:
+```js
+real    0m2.869s
+user    0m0.060s
+sys     0m0.005s
 ```
 
 Prezentacja graficzna wyników:
@@ -192,11 +243,12 @@ Prezentacja graficzna wyników:
 
 #III)Porównanie czasów
 
-|    |   JavaScript    |   Python   |
-|----|-----------------|------------|
-|real|	0m2.912s       |  0m1.834s  |
-|user|	0m0.030s       |  0m2.480s  |
-|sys |	0m0.019s       |  0m0.126s  |
+|    |    Mongo v 2.4.12            |    Mongo v 2.8.0-rc0          |
+|    |   JavaScript    |   Python   |   JavaScript     |   Python   |
+|----|-----------------|------------|------------------|------------|
+|real|	0m2.912s       |  0m1.834s  |	0m2.912s       |  0m1.834s  |
+|user|	0m0.030s       |  0m2.480s  |	0m0.030s       |  0m2.480s  |
+|sys |	0m0.019s       |  0m0.126s  |	0m0.019s       |  0m0.126s  |
 
 #Pipeline aggregation 2
 
@@ -237,12 +289,20 @@ actions: 10
 	"ok" : 1
 }
 ```
-Czasy:
+Czasy dla Mongo v 2.4.12:
 ```js
 real	0m2.696s
 user	0m0.032s
 sys	0m0.020s
 ```
+
+Czasy dla Mongo v 2.8.0-rc0:
+```
+real	0m2.717s
+user	0m0.052s
+sys	0m0.012s
+```
+Jak widać dla Mongo w wersji 2.8.0-rc0 wyniki [image](files/agg2jserror.md) są w odwrotnej kolejności, po nich zaś następują błędy.
 
 #II)Python
 ```js
@@ -278,11 +338,18 @@ Prezentacja wyników:
     ]
 }
 ```
-Czasy:
+Czasy dla Mongo v 2.4.12:
 ```js
 real    0m1.831s
 user    0m2.446s
 sys     0m0.170s
+```
+
+Czasy dla Mongo v 2.8.0-rc0:
+```
+real    0m2.720s
+user    0m0.056s
+sys     0m0.011s
 ```
 
 Prezentacja graficzna wyników:
@@ -334,13 +401,20 @@ actions: 3
 	"ok" : 1
 }
 ```
-Czasy:
+Czasy dla Mongo v 2.4.12:
 ```js
 real	0m7.951s
 user	0m0.045s
 sys	0m0.012s
-
 ```
+
+Czasy dla Mongo v 2.8.0-rc0:
+```
+real	0m7.711s
+user	0m0.049s
+sys	0m0.012s
+```
+Jak widać dla Mongo w wersji 2.8.0-rc0 wyniki [image](files/agg3jserror.md) są w odwrotnej kolejności, po nich zaś następują błędy.
 
 #II)Python
 ```js
@@ -374,11 +448,18 @@ Prezentacja wyników:
     ]
 }
 ```
-Czasy:
+Czasy dla Mongo v 2.4.12:
 ```js
 real    0m2.888s
 user    0m2.254s
 sys     0m0.227s
+```
+
+Czasy dla Mongo v 2.8.0-rc0:
+```
+real    0m7.819s
+user    0m0.047s
+sys     0m0.021s
 ```
 
 Prezentacja graficzna wyników:
@@ -457,12 +538,20 @@ actions: 15
 	"ok" : 1
 }
 ```
-Czasy:
+Czasy dla Mongo v 2.4.12:
 ```js
 real	0m0.779s
 user	0m0.041s
 sys	0m0.015s
 ```
+
+Czasy dla Mongo v 2.8.0-rc0:
+```
+real	0m0.760s
+user	0m0.047s
+sys	0m0.019s
+```
+Jak widać dla Mongo w wersji 2.8.0-rc0 wyniki [image](files/agg4jserror.md) są w odwrotnej kolejności, po nich zaś następują błędy.
 
 #II)Python
 ```js
@@ -523,11 +612,18 @@ Prezentacja wyników:
     ]
 }
 ```
-Czasy:
+Czasy dla Mongo v 2.4.12:
 ```js
 real    0m1.843s
 user    0m2.471s
 sys     0m0.139s
+```
+
+Czasy dla Mongo v 2.8.0-rc0:
+```
+real    0m0.771s
+user    0m0.042s
+sys     0m0.026s
 ```
 
 Prezentacja graficzna wyników:

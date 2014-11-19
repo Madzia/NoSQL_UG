@@ -145,7 +145,7 @@ Time: 394345,551 ms
 | PostgreSQL           |                 394345,551 ms (6m36.345s)           |
 
 =======
-#MongoBD v 2.4.12
+#MongoBD v 2.4.12 oraz MongoBD v 2.8.0-rc0
 #c)
 
 Zadanie zostało wykonane przy pomocy PyMongo w programie PyCharm w języku programowania Python. Stworzony skrypt:
@@ -195,16 +195,28 @@ db.newone.find().limit(2)
 "_id" : ObjectId("5449207fec294e11edb4f1f5") }
 ```
 
-Czasy:
+Czasy dla Mongo v 2.4.12:
 ```sh
 real  23m1.730s
 user  13m20.031s
 sys   0m14.311s
 ```
 
-Wykorzystanie zasobów podczas przetwarzania pliku:
+Czasy dla Mongo v 2.8.0-rc0:
+```sh
+real  27m2.316s
+user  14m21.121s
+sys   0m17.618s
+```
+
+Wykorzystanie zasobów podczas przetwarzania pliku dla Mongo v 2.4.12:
 ![image](screens/zdj3.png)
 
+
+| Baza Danych          |                    Czas                             |
+|----------------------|-----------------------------------------------------|
+|   MongoDB v 2.4.12   | real: 23m1.730s   user: 13m20.031s   sys: 0m14.311s |
+| MongoDB v 2.8.0-rc0  | real: 27m2.316s   user: 14m21.121s   sys: 0m17.618s |
 
 ========
 
@@ -244,9 +256,9 @@ Przykładowy wynik:
 { "_id" : ObjectId("544a4c2df6552e11dea52b44"), "loc" : { "type" : "Point", "coordinates" : [  -0.014848686252722,  51.477547665535 ] }, "station" : "Greenwich" }
 ```
 
-Wszystkie [wyniki](screens/wyniki.json).
+Wszystkie [wyniki](files/wyniki.json).
 
-![mapa](screens/all_mapa.geojson)
+![mapa](files/all_mapa.geojson)
  	
 #$near - v1
 Wybieram punkt (Big Ben):
@@ -278,7 +290,7 @@ Wynik:
 ```
 
 Prezentacja wyników:
-![mapa](screens/Big_Ben_mapa.geojson)
+![mapa](files/Big_Ben_mapa.geojson)
 
 #$near - v2
 Wybieram punkt:
@@ -309,7 +321,7 @@ Wynik:
 ```
 
 Prezentacja wyników:
-![mapa](screens/near_mapa.geojson)
+![mapa](files/near_mapa.geojson)
 
 #$geoWithin - center
 Wykonuję zapytanie:
@@ -355,7 +367,7 @@ wynik:
 ]
 ```
 Prezentacja wyników:
-![mapa](screens/center_mapa.geojson)
+![mapa](files/center_mapa.geojson)
 
 
 #$geoWithin - Box
@@ -402,7 +414,7 @@ wynik:
 ]
 ```
 Prezentacja wyników:
-![mapa](screens/box_mapa.geojson)
+![mapa](files/box_mapa.geojson)
 
 #$geoIntersects - Polygon
 ```sh
@@ -429,7 +441,7 @@ wynik (jeden z 6 elementów):
 	}
 ```
 Prezentacja wyników:
-![mapa](screens/polygon_mapa.geojson)
+![mapa](files/polygon_mapa.geojson)
 
 #$geoIntersects - LineString
 
@@ -443,5 +455,5 @@ db.newone.find({ loc : { $geoIntersects : { $geometry : linia } } }).toArray();
 ```
 
 Prezentacja wyników:
-![mapa](screens/linia_mapa.geojson)
+![mapa](files/linia_mapa.geojson)
 
