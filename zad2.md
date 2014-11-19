@@ -243,13 +243,12 @@ Prezentacja graficzna wyników:
 
 #III)Porównanie czasów
 
-
 |    |  Mongo v 2.4.12  | Mongo v 2.4.12 |  Mongo v 2.8.0-rc0  |  Mongo v 2.8.0-rc0  |
 |----|------------------|----------------|---------------------|---------------------|
 |    |    JavaScript    |     Python     |     JavaScript      |       Python        |
-|real|	   0m2.912s     |    0m1.834s    | 	0m2.912s       |      0m1.834s       |
-|user|	   0m0.030s     |    0m2.480s    |	0m0.030s       |      0m2.480s       |
-|sys |	   0m0.019s     |    0m0.126s    |	0m0.019s       |      0m0.126s       |
+|real|	   0m2.912s     |    0m1.834s    | 	0m2.866s       |      0m2.869s       |
+|user|	   0m0.030s     |    0m2.480s    |	0m0.048s       |      0m0.060s       |
+|sys |	   0m0.019s     |    0m0.126s    |	0m0.008s       |      0m0.005s       |
 
 #Pipeline aggregation 2
 
@@ -359,11 +358,12 @@ Prezentacja graficzna wyników:
 
 #III)Porównanie czasów
 
-|    |   JavaScript    |   Python   |
-|----|-----------------|------------|
-|real|	0m2.696s       |  0m1.831s  |
-|user|	0m0.032s       |  0m2.446s  |
-|sys |	0m0.020s       |  0m0.170s  |
+|    |  Mongo v 2.4.12  | Mongo v 2.4.12 |  Mongo v 2.8.0-rc0  |  Mongo v 2.8.0-rc0  |
+|----|------------------|----------------|---------------------|---------------------|
+|    |    JavaScript    |     Python     |     JavaScript      |       Python        |
+|real|	   0m2.696s     |    0m1.831s    | 	0m2.717s       |      0m2.720s       |
+|user|	   0m0.032s     |    0m2.446s    |	0m0.052s       |      0m0.056s       |
+|sys |	   0m0.020s     |    0m0.170s    |	0m0.012s       |      0m0.011s       |
 
 #Pipeline aggregation 3
 
@@ -469,11 +469,13 @@ Prezentacja graficzna wyników:
 
 #III)Porównanie czasów
 
-|    |   JavaScript    |   Python   |
-|----|-----------------|------------|
-|real|	0m7.951s       |  0m2.888s  |
-|user|	0m0.045s       |  0m2.254s  |
-|sys |	0m0.012s       |  0m0.227s  |
+
+|    |  Mongo v 2.4.12  | Mongo v 2.4.12 |  Mongo v 2.8.0-rc0  |  Mongo v 2.8.0-rc0  |
+|----|------------------|----------------|---------------------|---------------------|
+|    |    JavaScript    |     Python     |     JavaScript      |       Python        |
+|real|	   0m7.951s     |    0m2.888s    | 	0m7.711s       |      0m7.819s       |
+|user|	   0m0.045s     |    0m2.254s    |	0m0.049s       |      0m0.047s       |
+|sys |	   0m0.012s     |    0m0.227s    |	0m0.012s       |      0m0.021s       |
 
 #Pipeline aggregation 4
 
@@ -633,9 +635,9 @@ Prezentacja graficzna wyników:
 
 #III)Porównanie czasów
 
-|    |   JavaScript    |   Python   |
-|----|-----------------|------------|
-|real|	0m0.779s       |  0m1.843s  |
-|user|	0m0.041s       |  0m2.471s  |
-|sys |	0m0.015s       |  0m0.139s  |
-
+|    |  Mongo v 2.4.12  | Mongo v 2.4.12 |  Mongo v 2.8.0-rc0  |  Mongo v 2.8.0-rc0  |
+|----|------------------|----------------|---------------------|---------------------|
+|    |    JavaScript    |     Python     |     JavaScript      |       Python        |
+|real|	   0m0.779s     |    0m1.843s    | 	0m0.760s       |      0m0.771s       |
+|user|	   0m0.041s     |    0m2.471s    |	0m0.047s       |      0m0.042s       |
+|sys |	   0m0.015s     |    0m0.139s    |	0m0.019s       |      0m0.026s       |
