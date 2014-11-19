@@ -117,7 +117,7 @@ printjson(result);
 Prezentacja wyników:
 ```js
 >time mongo power agg1.js
-MongoDB shell version: 2.4.9
+MongoDB shell version: 2.4.12
 connecting to: power
 actions: 10
 {
@@ -190,6 +190,14 @@ Prezentacja graficzna wyników:
 
 ![image](screens/zad1bar.png)
 
+#III)Porównanie czasów
+
+|    |   JavaScript    |   Python   |
+|----|-----------------|------------|
+|real|	0m2.912s       |  0m1.834s  |
+|user|	0m0.030s       |  0m2.480s  |
+|sys |	0m0.019s       |  0m0.126s  |
+
 #Pipeline aggregation 2
 
 #I)JavaScript
@@ -210,7 +218,7 @@ printjson(result);
 Prezentacja wyników:
 ```js
 >time mongo power agg2.js
-MongoDB shell version: 2.4.9
+MongoDB shell version: 2.4.12
 connecting to: power
 actions: 10
 {
@@ -306,7 +314,7 @@ printjson(result);
 Prezentacja wyników:
 ```js
 > time mongo power agg3.js
-MongoDB shell version: 2.4.9
+MongoDB shell version: 2.4.12
 connecting to: power
 actions: 3
 {
@@ -394,7 +402,7 @@ printjson(result);
 Prezentacja wyników:
 ```js
 > time mongo power agg4.js
-MongoDB shell version: 2.4.9
+MongoDB shell version: 2.4.12
 connecting to: power
 actions: 15
 {
