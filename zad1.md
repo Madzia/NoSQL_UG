@@ -64,7 +64,7 @@ sys	0m14.405s
 
 Przeliczenie ilości wystąpień w bazie:
 ```js
-> db.train.count()
+db.train.count()
 6034195
 ```
 
@@ -91,12 +91,12 @@ sys	0m56.580s
 
 Przeliczenie ilości wystąpień w bazie:
 ```js
->./mongo
+./mongo
 MongoDB shell version: 2.8.0-rc0
 dconnecting to: test
->use train
+use train
 switched to db train
-> db.train.count()
+db.train.count()
 6034195
 ```
 
@@ -105,13 +105,13 @@ switched to db train
 #Zad1 a) b)
 początkowo trzeba stworzyć tabelę:
 ```sh
->psql magda
->>CREATE TABLE train (Id serial PRIMARY KEY, Title VARCHAR, Body VARCHAR, Tags VARCHAR);
+psql magda
+CREATE TABLE train (Id serial PRIMARY KEY, Title VARCHAR, Body VARCHAR, Tags VARCHAR);
 ```
 
 PostgreSQL umożliwia mieżenie czasu komendą:
 ```sh
->\timing
+\timing
 ```
 
 w wyniku czego otrzymany został czas oraz automatycznie wynik zliczenia wszystkich wierszy:
@@ -126,7 +126,7 @@ czyli w przeliczeniu otrzymany został czas 14m49.515s
 
 Przeliczenie ilości wystąpień w bazie:
 ```sh
->SELECT COUNT(*) FROM train;
+SELECT COUNT(*) FROM train;
   count
 `---------
  6034195
@@ -138,11 +138,11 @@ Time: 394345,551 ms
 #Zestawienie wyników
 
 
-| Baza Danych          |                    Czas                             |
-|----------------------|-----------------------------------------------------|
-|   MongoDB v 2.4.12   | real: 9m23.553s    user: 1m55.715s   sys: 0m14.405s |
-| MongoDB v 2.8.0-rc0  | real: 11m26.828s   user: 8m32.698s   sys: 0m56.580s |
-| PostgreSQL           |                 394345,551 ms (6m36.345s)           |
+| Baza Danych          |             Czas          |
+|----------------------|---------------------------|
+|   MongoDB v 2.4.12   |      real: 9m23.553s      |
+| MongoDB v 2.8.0-rc0  |      real: 11m26.828s     |
+| PostgreSQL           | 394345,551 ms (6m36.345s) |
 
 =======
 #MongoBD v 2.4.12 oraz MongoBD v 2.8.0-rc0
@@ -213,10 +213,10 @@ Wykorzystanie zasobów podczas przetwarzania pliku dla Mongo v 2.4.12:
 ![image](screens/zdj3.png)
 
 
-| Baza Danych          |                    Czas                             |
-|----------------------|-----------------------------------------------------|
-|   MongoDB v 2.4.12   | real: 23m1.730s   user: 13m20.031s   sys: 0m14.311s |
-| MongoDB v 2.8.0-rc0  | real: 27m2.316s   user: 14m21.121s   sys: 0m17.618s |
+| Baza Danych          |      Czas       |
+|----------------------|-----------------|
+|   MongoDB v 2.4.12   | real: 23m1.730s |
+| MongoDB v 2.8.0-rc0  | real: 27m2.316s |
 
 ========
 
@@ -268,7 +268,7 @@ var point = { "type" : "Point", "coordinates" : [-0.124625, 51.500729]};
 
 Wykonuję zapytanie:
 ```sh
->db.newone.find({ loc: {$near: {$geometry: point}, $maxDistance: 150} }).toArray()
+db.newone.find({ loc: {$near: {$geometry: point}, $maxDistance: 150} }).toArray()
 ```
 
 Wynik:
@@ -300,7 +300,7 @@ var point = { "type" : "Point", "coordinates" : [0.16, 51.46]};
 
 Wykonuję zapytanie:
 ```sh
->db.newone2.find({ loc: {$near: {$geometry: point}, $maxDistance: 1000} }).toArray()
+db.newone2.find({ loc: {$near: {$geometry: point}, $maxDistance: 1000} }).toArray()
 ```
 
 Wynik:

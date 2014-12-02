@@ -39,7 +39,7 @@ cat household_power_consumption.txt | tr ";" "," > power.txt
 
 Przykładowy wynik po poprawie:
 ```sh
->head -n 3 power.txt 
+head -n 3 power.txt 
 Date,Time,Global_active_power,Global_reactive_power,Voltage,Global_intensity,Sub_metering_1,Sub_metering_2,Sub_metering_3
 16/12/2006,17:24:00,4.216,0.418,234.840,18.400,0.000,1.000,17.000
 16/12/2006,17:25:00,5.360,0.436,233.630,23.000,0.000,1.000,16.000
@@ -73,7 +73,7 @@ sys	0m1.388s
 
 Sprawdzenie poprawnego wprowadzenia wyników:
 ```sh
-> db.power.find().limit(1)
+db.power.find().limit(1)
 {	
 	"_id" : ObjectId("5453f425c520b3a1d86d3b80"), 
 	"Date" : "16/12/2006", 
@@ -119,17 +119,16 @@ Oraz przeliczenie wprowadzonych danych:
 ```sh
 MongoDB shell version: 2.8.0-rc0
 connecting to: test
-> use power2
+use power2
 switched to db power2
-> db.power2.count()
+db.power2.count()
 2075259
-> 
 ```
 
-| Baza Danych          |                    Czas                             |
-|----------------------|-----------------------------------------------------|
-|   MongoDB v 2.4.12   | real: 1m1.264s    user: 0m6.460s     sys: 0m1.388s  |
-| MongoDB v 2.8.0-rc0  | real: 1m16.006s   user: 1m28.382s    sys: 0m7.880s  |
+| Baza Danych          |      Czas       |
+|----------------------|-----------------|
+|   MongoDB v 2.4.12   | real: 1m1.264s  |
+| MongoDB v 2.8.0-rc0  | real: 1m16.006s |
 
 #zad 2. c) d) e)
 
@@ -153,7 +152,7 @@ printjson(result);
 
 Prezentacja wyników:
 ```js
->time mongo power agg1.js
+time mongo power agg1.js
 MongoDB shell version: 2.4.12
 connecting to: power
 actions: 10
@@ -247,9 +246,6 @@ Prezentacja graficzna wyników:
 |----|------------------|----------------|---------------------|---------------------|
 |    |    JavaScript    |     Python     |     JavaScript      |       Python        |
 |real|	   0m2.912s     |    0m1.834s    | 	0m2.866s       |      0m2.869s       |
-|user|	   0m0.030s     |    0m2.480s    |	0m0.048s       |      0m0.060s       |
-|sys |	   0m0.019s     |    0m0.126s    |	0m0.008s       |      0m0.005s       |
-
 #Pipeline aggregation 2
 
 #I)JavaScript
@@ -269,7 +265,7 @@ printjson(result);
 
 Prezentacja wyników:
 ```js
->time mongo power agg2.js
+time mongo power agg2.js
 MongoDB shell version: 2.4.12
 connecting to: power
 actions: 10
@@ -362,8 +358,6 @@ Prezentacja graficzna wyników:
 |----|------------------|----------------|---------------------|---------------------|
 |    |    JavaScript    |     Python     |     JavaScript      |       Python        |
 |real|	   0m2.696s     |    0m1.831s    | 	0m2.717s       |      0m2.720s       |
-|user|	   0m0.032s     |    0m2.446s    |	0m0.052s       |      0m0.056s       |
-|sys |	   0m0.020s     |    0m0.170s    |	0m0.012s       |      0m0.011s       |
 
 #Pipeline aggregation 3
 
@@ -389,7 +383,7 @@ printjson(result);
 
 Prezentacja wyników:
 ```js
-> time mongo power agg3.js
+time mongo power agg3.js
 MongoDB shell version: 2.4.12
 connecting to: power
 actions: 3
@@ -474,8 +468,6 @@ Prezentacja graficzna wyników:
 |----|------------------|----------------|---------------------|---------------------|
 |    |    JavaScript    |     Python     |     JavaScript      |       Python        |
 |real|	   0m7.951s     |    0m2.888s    | 	0m7.711s       |      0m7.819s       |
-|user|	   0m0.045s     |    0m2.254s    |	0m0.049s       |      0m0.047s       |
-|sys |	   0m0.012s     |    0m0.227s    |	0m0.012s       |      0m0.021s       |
 
 #Pipeline aggregation 4
 
@@ -501,7 +493,7 @@ printjson(result);
 
 Prezentacja wyników:
 ```js
-> time mongo power agg4.js
+time mongo power agg4.js
 MongoDB shell version: 2.4.12
 connecting to: power
 actions: 15
@@ -639,5 +631,3 @@ Prezentacja graficzna wyników:
 |----|------------------|----------------|---------------------|---------------------|
 |    |    JavaScript    |     Python     |     JavaScript      |       Python        |
 |real|	   0m0.779s     |    0m1.843s    | 	0m0.760s       |      0m0.771s       |
-|user|	   0m0.041s     |    0m2.471s    |	0m0.047s       |      0m0.042s       |
-|sys |	   0m0.015s     |    0m0.139s    |	0m0.019s       |      0m0.026s       |
