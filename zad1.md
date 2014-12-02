@@ -10,20 +10,20 @@ Sprzęt: Procesor Intel Core i5-M 450 @ 2.40GHz × 4 Dysk HDD 500 GB. Pamięć R
 
 Przetworzyłam plik Train.csv następującymi komendami:
 ```js
->cat Train.csv | tr "\n" " " | tr "\r" "\n" > Train_changed.csv
+cat Train.csv | tr "\n" " " | tr "\r" "\n" > Train_changed.csv
 ```
 Sprawdziłam ilość linii w otrzymanym pliku:
 ```js
->wc -l Train_changed.csv
+wc -l Train_changed.csv
 6034196 Train_changed.csv
 ```
 Usunęłam ostatnią (pustą) linię dodaną podczas korekty początkowej:
 ```js
->head -n 6034196 Train_changed.csv > Train_changed2.csv
+head -n 6034196 Train_changed.csv > Train_changed2.csv
 ```
 Sprawdziłam ilość linii otrzymanych po przetworzeniu pliku:
 ```js
->wc -l Train_changed2.csv
+wc -l Train_changed2.csv
 6034195 Train_changed2.csv
 ```
 ========
