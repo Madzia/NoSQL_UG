@@ -99,6 +99,36 @@ switched to db train
 db.train.count()
 6034195
 ```
+#MongoDB v 2.8.0-rc0 snappy oraz zlib
+konfiguracje dla Wiretiger:
+
+włączenie wiredTiger w wersji snappy
+```sh
+./mongod --storageEngine=wiredtiger
+```
+
+włączenie wiredTiger w wersji zlib
+```sh
+./mongod --storageEngine=wiredtiger --wiredTigerCollectionConfig=zlib
+```
+
+wczytywanie do bazy zrobione w sposób identyczny jak dla MongoDB v 2.4.12 opisanego powyżej.
+
+Czasy:
+dla snappy:
+```sh
+real	11m2.059s
+user	8m28.316s
+sys	0m56.652s
+```
+
+dla zlib:
+```
+real	11m2.548s
+user	8m27.724s
+sys	0m59.728s
+
+```
 
 ========
 #PostgreSQL
@@ -134,36 +164,6 @@ SELECT COUNT(*) FROM train;
 
 Time: 394345,551 ms
 ```
-#MongoDV
-konfiguracje dla Wiretiger:
-
-włączenie wiredTiger w wersji snappy
-```sh
-./mongod --storageEngine=wiredtiger
-```
-
-włączenie wiredTiger w wersji zlib
-```sh
-./mongod --storageEngine=wiredtiger --wiredTigerCollectionConfig=zlib
-```
-
-wczytywanie do bazy zrobione w sposób identyczny jak dla MongoDB v 2.4.12 opisanego powyżej.
-
-Czasy:
-dla snappy:
-```sh
-real	11m2.059s
-user	8m28.316s
-sys	0m56.652s
-```
-
-dla zlib:
-```
-real	11m2.548s
-user	8m27.724s
-sys	0m59.728s
-
-```
 
 #Zestawienie wyników
 
@@ -177,7 +177,7 @@ sys	0m59.728s
 | MongoDB v 2.8.0-rc0 WiredTiger (zlib)   |      real: 11m2.548s      |       11.273GB       |
 
 =======
-#MongoBD v 2.4.12 oraz MongoBD v 2.8.0-rc0
+#Wszystkie cztery wersje konfiguracji MongoDB
 #c)
 
 Zadanie zostało wykonane przy pomocy PyMongo w programie PyCharm w języku programowania Python. Stworzony skrypt:

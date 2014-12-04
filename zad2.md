@@ -49,7 +49,7 @@ Date,Time,Global_active_power,Global_reactive_power,Voltage,Global_intensity,Sub
 
 #zad 2. b)
 
-Wczytywanie danych do bazy Mongo v 2.4.12:
+#Wczytywanie danych do bazy Mongo v 2.4.12:
 ```sh
 time mongoimport -d power -c power --type csv --headerline --file power.txt
 ```
@@ -95,7 +95,7 @@ db.power.count()
 ```
 
 
-Wczytywanie danych do bazy Mongo v 2.8.0-rc0 (bez kompresji):
+#Wczytywanie danych do bazy Mongo v 2.8.0-rc0 (bez kompresji):
 ```sh
 time ./mongoimport -d power2 -c power2 --type csv --headerline --file ~/Pobrane/power.txt
 ```
@@ -125,7 +125,9 @@ db.power2.count()
 2075259
 ```
 
-Wczytanie danych do MongoDB v 2.8.0-rc0 snappy adekwatnie jak w przypadku MongoDB v 2.8.0-rc0. Konfiguracja jak w ćwiczeniu pierwszym.
+#Wczytanie danych do MongoDB v 2.8.0-rc0 snappy 
+
+adekwatnie jak w przypadku MongoDB v 2.8.0-rc0. Konfiguracja jak w ćwiczeniu pierwszym.
 Czasy:
 ```sh
 real	1m14.114s
@@ -133,7 +135,9 @@ user	1m27.642s
 sys	0m6.752s
 ```
 
-Wczytanie danych do MongoDB v 2.8.0-rc0 zlib adekwatnie jak w przypadku MongoDB v 2.8.0-rc0. Konfiguracja jak w ćwiczeniu pierwszym.
+#Wczytanie danych do MongoDB v 2.8.0-rc0 zlib 
+
+adekwatnie jak w przypadku MongoDB v 2.8.0-rc0. Konfiguracja jak w ćwiczeniu pierwszym.
 Czasy:
 ```sh
 real	1m13.873s
