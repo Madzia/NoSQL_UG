@@ -49,7 +49,7 @@ Date,Time,Global_active_power,Global_reactive_power,Voltage,Global_intensity,Sub
 
 #zad 2. b)
 
-Wczytywanie danych do bazy Mongo:
+Wczytywanie danych do bazy Mongo v 2.4.12:
 ```sh
 time mongoimport -d power -c power --type csv --headerline --file power.txt
 ```
@@ -95,7 +95,7 @@ db.power.count()
 ```
 
 
-Wczytywanie danych do bazy Mongo:
+Wczytywanie danych do bazy Mongo v 2.8.0-rc0 (bez kompresji):
 ```sh
 time ./mongoimport -d power2 -c power2 --type csv --headerline --file ~/Pobrane/power.txt
 ```
@@ -125,10 +125,30 @@ db.power2.count()
 2075259
 ```
 
-| Baza Danych          |      Czas       |
-|----------------------|-----------------|
-|   MongoDB v 2.4.12   | real: 1m1.264s  |
-| MongoDB v 2.8.0-rc0  | real: 1m16.006s |
+Wczytanie danych do MongoDB v 2.8.0-rc0 snappy adekwatnie jak w przypadku MongoDB v 2.8.0-rc0. Konfiguracja jak w ćwiczeniu pierwszym.
+Czasy:
+```sh
+real	1m14.114s
+user	1m27.642s
+sys	0m6.752s
+```
+
+Wczytanie danych do MongoDB v 2.8.0-rc0 zlib adekwatnie jak w przypadku MongoDB v 2.8.0-rc0. Konfiguracja jak w ćwiczeniu pierwszym.
+Czasy:
+```sh
+real	1m13.873s
+user	1m28.132s
+sys	0m7.184s
+```
+
+
+
+| Baza Danych                         |      Czas       |
+|-------------------------------------|-----------------|
+|   MongoDB v 2.4.12                  | real: 1m1.264s  |
+| MongoDB v 2.8.0-rc0 (bez kompresji) | real: 1m16.006s |
+| MongoDB v 2.8.0-rc0 snappy          | real: 1m14.114s |
+| MongoDB v 2.8.0-rc0 zlib            | real: 1m13.873s |
 
 #zad 2. c) d) e)
 
@@ -141,10 +161,12 @@ Sprawdzenie łącznego zapotrzebowania na prąd z taryfy nr 1 o danej porze (10 
 Skrypt:
 ```js
 var coll = db.power;
-var result = coll.aggregate(
-  { $group: {_id: {"Time": "$Time"}, count: {$sum: "$Sub_metering_1"}}},
-  { $sort : {count : -1}},
-  { $limit: 10});
+var options = {allowDiskUse: True, cursor: {batchSize: 4}}
+var group = { $group: {_id: {"Time": "$Time"}, count: {$sum: "$Sub_metering_1"}}};
+var sort = { $sort : {count : -1}};
+var limit = { $limit: 10};
+
+var result = coll.aggregate([group, sort, limit], options);
 
 print("actions: " + result.result.length);
 printjson(result);
@@ -197,11 +219,14 @@ import json
 
 conn=Connection()
 db=conn["power"]
-result = db.power.aggregate([
-  { "$group": {"_id": {"Time": "$Time"}, "count": {"$sum": "$Sub_metering_1"}}},
-  { "$sort" : SON([("count" , -1)])},
-  { "$limit": 10}]
-)
+
+options = {"allowDiskUse": True, "cursor": {"batchSize": 4}}
+group = { "$group": {"_id": {"Time": "$Time"}, "count": {"$sum": "$Sub_metering_1"}}}
+sort =  { "$sort" : SON([("count" , -1)])}
+limit = { "$limit": 10}
+
+result = db.power.aggregate([[group, sort, limit], options])
+
 print json.dumps(result, indent=4)
 ```
 
@@ -254,10 +279,12 @@ Prezentacja graficzna wyników:
 ```js
 var coll = db.power;
 
-var result = coll.aggregate(
-  { $group: {_id: {"Date": "$Date"}, count: {$sum: "$Sub_metering_3"}}},
-  { $sort : {count : 1}},
-  { $limit: 10});
+var options = {allowDiskUse: True, cursor: {batchSize: 4}};
+var group = { $group: {_id: {"Date": "$Date"}, count: {$sum: "$Sub_metering_3"}}};
+var sort = { $sort : {count : 1}};
+var limit = { $limit: 10};
+
+var result = coll.aggregate([group, sort, limit], options);
 
 print("actions: " + result.result.length);
 printjson(result);
@@ -309,10 +336,12 @@ import json
 conn=Connection()
 db=conn["power"]
 
-result = db.power.aggregate([
-  { "$group": {"_id": {"Date": "$Date"}, "count": {"$sum": "$Sub_metering_3"}}},
-  { "$sort" : SON([("count" , 1)])},
-  { "$limit": 10}])
+options = {"allowDiskUse": True, "cursor": {"batchSize": 4}}
+group ={ "$group": {"_id": {"Date": "$Date"}, "count": {"$sum": "$Sub_metering_3"}}}
+sort = { "$sort" : SON([("count" , 1)])}
+limit = { "$limit": 10}
+
+result = db.power.aggregate([group, sort, limit], options)
 print json.dumps(result, indent=4)
 ```
 
@@ -367,15 +396,18 @@ Najmniejsze 3 zurzycia taryfy 1 o danej godzinie.
 ```js
 var coll = db.power;
 
-var result = coll.aggregate(
-  {$project : {
+var options = {allowDiskUse: True, cursor: {batchSize: 4}}
+var project = {$project : {
 	hour: {$substr : ["$Time", 0, 2]},
 	sub: {"Sub_metering_1": "$Sub_metering_1"}
-  }},
-{ $group: {_id: {"hour": "$hour", subd : "$sub.Sub_metering_1"}}},
-{ $group: {_id: "$_id.hour", count: {$sum: "$_id.subd"}}},
-  { $sort : {count : 1}},
-  { $limit: 3});
+  }};
+var group1 = { $group: {_id: {"hour": "$hour", subd : "$sub.Sub_metering_1"}}};
+var group2 = { $group: {_id: "$_id.hour", count: {$sum: "$_id.subd"}}};
+var sort = { $sort : {count : 1}};
+var limit = { $limit: 3};
+
+
+var result = coll.aggregate([project, group1, group2, sort, limit], options);
 
 print("actions: " + result.result.length);
 printjson(result);
@@ -420,14 +452,16 @@ import json
 conn=Connection()
 db=conn["power"]
 
-result = db.power.aggregate([
-  {"$project" : {
+var options = {"allowDiskUse": True, "cursor": {"batchSize": 4}}
+var project = {"$project" : {
 	"hour": {"$substr" : ["$Time", 0, 2]},
-	"sub": {"Sub_metering_1": "$Sub_metering_1"}}},
-  { "$group": {"_id": {"hour": "$hour", "subd" : "$sub.Sub_metering_1"}}},
-  { "$group": {"_id": "$_id.hour", "count": {"$sum": "$_id.subd"}}},
-  { "$sort" : SON([("count" , 1)])},
-  { "$limit": 3}]);
+	"sub": {"Sub_metering_1": "$Sub_metering_1"}}}
+var group1 = { "$group": {"_id": {"hour": "$hour", "subd" : "$sub.Sub_metering_1"}}}
+var group2  ={ "$group": {"_id": "$_id.hour", "count": {"$sum": "$_id.subd"}}}
+var sort = { "$sort" : SON([("count" , 1)])}
+var limit = { "$limit": 3}
+
+result = db.power.aggregate([project, group1, group2, sort,limit], options);
 
 print json.dumps(result, indent=4)
 ```
@@ -477,14 +511,16 @@ Dnia 12.12.2007 o której godzinie było największe zurzycie prądu (łącznie 
 ```js
 var coll = db.power;
 
-var result = coll.aggregate(
-{ $match: { "Date" : "12/12/2007" } },
-{ $project: {_id: {
-"Date" : "$Date",
-"Time" : "$Time",
-}, wynik: { $add: ["$Sub_metering_3","$Sub_metering_2", "$Sub_metering_1"]}}},
-  { $sort : {wynik : -1}},
-  { $limit: 15});
+var options = {allowDiskUse: True, cursor: {batchSize: 4}};
+var match  ={ $match: { "Date" : "12/12/2007" } };
+var project  = { $project: {_id: {
+	"Date" : "$Date",
+	"Time" : "$Time",
+	}, wynik: { $add: ["$Sub_metering_3","$Sub_metering_2", "$Sub_metering_1"]}}};
+var sort = { $sort : {wynik : -1}};
+var limit = = { $limit: 15};
+
+var result = coll.aggregate([match,project,sort,limit], options);
 
 print("actions: " + result.result.length);
 printjson(result);
@@ -557,14 +593,16 @@ import json
 conn=Connection()
 db=conn["power"]
 
-result = db.power.aggregate([
-  { "$match": { "Date" : "12/12/2007" } },
-  { "$project": {"_id": {
+var options = {"allowDiskUse": True, "cursor": {"batchSize": 4}}
+var match  = { "$match": { "Date" : "12/12/2007" } }
+var project = { "$project": {"_id": {
       "Date" : "$Date",
       "Time" : "$Time",
-      }, "wynik": { "$add": ["$Sub_metering_3","$Sub_metering_2", "$Sub_metering_1"]}}},
-  { "$sort" : {"wynik" : -1}},
-  { "$limit": 15}]);
+      }, "wynik": { "$add": ["$Sub_metering_3","$Sub_metering_2", "$Sub_metering_1"]}}}
+var sort = { "$sort" : {"wynik" : -1}}
+var limit = { "$limit": 15}
+
+var result = coll.aggregate([match,project,sort,limit], options);
 
 print json.dumps(result, indent=4)
 ```

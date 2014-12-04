@@ -134,15 +134,47 @@ SELECT COUNT(*) FROM train;
 
 Time: 394345,551 ms
 ```
+#MongoDV
+konfiguracje dla Wiretiger:
+
+włączenie wiredTiger w wersji snappy
+```sh
+./mongod --storageEngine=wiredtiger
+```
+
+włączenie wiredTiger w wersji zlib
+```sh
+./mongod --storageEngine=wiredtiger --wiredTigerCollectionConfig=zlib
+```
+
+wczytywanie do bazy zrobione w sposób identyczny jak dla MongoDB v 2.4.12 opisanego powyżej.
+
+Czasy:
+dla snappy:
+```sh
+real	11m2.059s
+user	8m28.316s
+sys	0m56.652s
+```
+
+dla zlib:
+```
+real	11m2.548s
+user	8m27.724s
+sys	0m59.728s
+
+```
 
 #Zestawienie wyników
 
 
-| Baza Danych          |             Czas          |
-|----------------------|---------------------------|
-|   MongoDB v 2.4.12   |      real: 9m23.553s      |
-| MongoDB v 2.8.0-rc0  |      real: 11m26.828s     |
-| PostgreSQL           | 394345,551 ms (6m36.345s) |
+| Baza Danych                             |             Czas          | Objętość bazy danych |
+|-----------------------------------------|---------------------------|----------------------|
+| PostgreSQL                              | 394345,551 ms (6m36.345s) |      około 5 GB      |
+| MongoDB v 2.4.12                        |      real: 9m23.553s      |       13.924GB       |
+| MongoDB v 2.8.0-rc0 (bez kompresji)     |      real: 11m26.828s     |       13.627GB       |
+| MongoDB v 2.8.0-rc0 WiredTiger (snappy) |      real: 11m2.059s      |       11.948GB       |
+| MongoDB v 2.8.0-rc0 WiredTiger (zlib)   |      real: 11m2.548s      |       11.273GB       |
 
 =======
 #MongoBD v 2.4.12 oraz MongoBD v 2.8.0-rc0
@@ -202,21 +234,37 @@ user  13m20.031s
 sys   0m14.311s
 ```
 
-Czasy dla Mongo v 2.8.0-rc0:
+Czasy dla Mongo v 2.8.0-rc0 bez kompresji:
 ```sh
 real  27m2.316s
 user  14m21.121s
 sys   0m17.618s
 ```
 
+Czasy dla Mongo v 2.8.0-rc0 snappy:
+```sh
+real  26m5.215s
+user  14m20.222s
+sys   0m14.731s
+```
+
+Czasy dla Mongo v 2.8.0-rc0 zlib:
+```sh
+real  26m7.312s
+user  14m21.072s
+sys   0m15.214s
+```
+
 Wykorzystanie zasobów podczas przetwarzania pliku dla Mongo v 2.4.12:
 ![image](screens/zdj3.png)
 
 
-| Baza Danych          |      Czas       |
-|----------------------|-----------------|
-|   MongoDB v 2.4.12   | real: 23m1.730s |
-| MongoDB v 2.8.0-rc0  | real: 27m2.316s |
+| Baza Danych                         |      Czas       |
+|-------------------------------------|-----------------|
+|   MongoDB v 2.4.12                  | real: 23m1.730s |
+| MongoDB v 2.8.0-rc0 (bez kompresji) | real: 27m2.316s |
+| MongoDB v 2.8.0-rc0  snappy         | real: 26m5.215s |
+| MongoDB v 2.8.0-rc0  zlib           | real: 26m7.312s |
 
 ========
 
