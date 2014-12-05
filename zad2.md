@@ -215,6 +215,8 @@ Jak widać dla Mongo w wersji 2.8.0-rc0 wyniki [image](files/agg1jserror.md) są
 
 #II)Python
 
+Sprawdzenie łącznego zapotrzebowania na prąd z taryfy nr 1 o danej porze (10 największych pozycji).
+
 Skrypt:
 ```js
 from bson.son import SON
@@ -332,6 +334,8 @@ sys	0m0.012s
 Jak widać dla Mongo w wersji 2.8.0-rc0 wyniki [image](files/agg2jserror.md) są w odwrotnej kolejności, po nich zaś następują błędy.
 
 #II)Python
+
+10 dat, kiedy najmniej korzystało się z taryfy 3  (10 najmniejszych pozycji).
 ```js
 from bson.son import SON
 from pymongo import Connection
@@ -448,6 +452,8 @@ sys	0m0.012s
 Jak widać dla Mongo w wersji 2.8.0-rc0 wyniki [image](files/agg3jserror.md) są w odwrotnej kolejności, po nich zaś następują błędy.
 
 #II)Python
+
+Najmniejsze 3 zurzycia taryfy 1 o danej godzinie.
 ```js
 from bson.son import SON
 from pymongo import Connection
@@ -589,6 +595,8 @@ sys	0m0.019s
 Jak widać dla Mongo w wersji 2.8.0-rc0 wyniki [image](files/agg4jserror.md) są w odwrotnej kolejności, po nich zaś następują błędy.
 
 #II)Python
+
+Dnia 12.12.2007 o której godzinie było największe zurzycie prądu (łącznie taryfa 1, 2 i 3) uszeregowane od największego (15 pierwszych pozycji.
 ```js
 from bson.son import SON
 from pymongo import Connection
