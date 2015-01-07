@@ -49,17 +49,23 @@ Należy dane wczytać do bazy danych. Wykorzystana w tym celu będzie wersja Mon
 
 ```json
 ./mongod --storageEngine=wiredtiger --wiredTigerCollectionConfig=zlib
-time mongoimport -d imdb -c imdb --type json --file getglue_sample.json
+time ./mongoimport -d imdb -c imdb --type json --file ../../getglue_sample.json
 ```
 
 Wynik:
 ```json
-
+...
+2014-11-19T18:01:17.973+0100    Progress: 19602500 documents inserted...
+2014-11-19T18:01:18.203+0100    Progress: 19663900 documents inserted...
+2014-11-19T18:01:18.424+0100    Progress: 19779800 documents inserted...
+2014-11-19T18:01:21.605+0100    imported 19831300 documents
 ```
 
 Czas:
 ```json
-
+real	15m12.158s
+user	6m12.119s
+sys	0m32.654s
 ```
 
 Sprawdzenie:
@@ -70,26 +76,45 @@ Sprawdzenie:
 ##Wczytanie danych do bazy Mongo 2.4.12
 
 ```json
-time mongoimport -d imdb -c imdb --type json --file getglue_sample.json
+time mongoimport -d imdb2 -c imdb2 --type json --file getglue_sample.json
 ```
 
 Wynik:
 ```json
-
+Thu Jan  8 00:15:54.007 			19602700	18050/second
+Thu Jan  8 00:15:57.005 		Progress: 11367988192/11454208342	99%
+Thu Jan  8 00:15:57.005 			19679900	18071/second
+Thu Jan  8 00:16:00.057 		Progress: 11425068413/11454208342	99%
+Thu Jan  8 00:16:00.057 			19779700	18113/second
+Thu Jan  8 00:16:02.365 check 9 19831301
+Thu Jan  8 00:16:02.792 imported 19831300 objects
 ```
 
 Czas:
 ```json
-
+real	18m14.128s
+user	7m18.132s
+sys	0m36.657s
 ```
 
 Sprawdzenie:
 ```json
-
+mongo
+MongoDB shell version: 2.4.12
+connecting to: test
+> use imdb2
+switched to db imdb2
+> db.imdb2.count()
+19831300
 ```
 
 | Baza Danych                             |             Czas          | Objętość bazy danych |
 |-----------------------------------------|---------------------------|----------------------|
-| MongoDB v 2.4.12                        |      real:       |              |
-| MongoDB v 2.8.0-rc0 WiredTiger (zlib)   |      real:       |              |
+| MongoDB v 2.4.12                        |      real: 18m14.128s     |       15.946GB       |
+| MongoDB v 2.8.0-rc0 WiredTiger (zlib)   |      real: 15m12.158      |       12.531GB       |
+
+
+=====
+
+
 
