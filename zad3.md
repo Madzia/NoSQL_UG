@@ -117,6 +117,7 @@ switched to db imdb2
 =====
 
 #suma kontrolna oraz ilość kategorii(ModelName):
+Skrypt
 ```js
 baza = db.imdb;
 
@@ -161,12 +162,87 @@ sys	0m0.016s
 
 #ilość produktów w danej kategorii:
 
+Skrypt
+```js
 
+``` 
+
+Wynik:
+```js
+
+```
+
+Rodajów kategorii było 5.
+
+Czas:
+```js
+
+```
 
 #powtarzające się inicjały w zakładce director
+
+Skrypt
+```js
+
+``` 
+
+Wynik:
+```js
+
+```
+
+Rodajów kategorii było 5.
+
+Czas:
+```js
+
+```
 
 
 #najczęśćiej używane słowa w tytułach
 
+Skrypt
+```js
+baza = db.imdb;
+
+map = function(){
+  var x = this.title;
+  emit(x,1);
+};
+
+reduce = function(key,values){
+  var result = 0;
+  values.forEach(function(item){
+     result += item;
+  });
+  return result;
+};
+
+
+var a = baza.mapReduce(map, reduce, {out: "wynik"});
+printjson(a);
+``` 
+
+Wynik:
+```js
+{
+	"result" : "wynik",
+	"timeMillis" : 828431,
+	"counts" : {
+		"input" : 16305414,
+		"emit" : 16305414,
+		"reduce" : 2600667,
+		"output" : 52618
+	},
+	"ok" : 1,
+}
+```
+
+Czas:
+```js
+real	13m48.508s
+user	0m0.045s
+sys	0m0.008s
+```
 
 
