@@ -233,7 +233,7 @@ connecting to: imdb
 	"result" : "wynik",
 	"timeMillis" : 429832,
 	"counts" : {
-		"input" : 16305414,
+		"input" : 19831300,
 		"emit" : 13756198,
 		"reduce" : 1017539,
 		"output" : 56
@@ -251,31 +251,61 @@ user	0m0.036s
 sys	0m0.018s
 ```
 
-#ilość produktów w danej kategorii:
+#Porównanie wyników:
 
-Skrypt
+| Baza Danych                           | suma kontrolna   | najczestrze slowa | inicjały       |
+|---------------------------------------|------------------|-------------------|----------------|
+| MongoDB v 2.4.12                      |  real 4m42.119s  |  real 13m48.508s  | real 7m9.886s  |
+| MongoDB v 2.8.0-rc0 WiredTiger (zlib) |  real 4m02.421s  |  real 11m64.542s  | real 6m43.553s |
+
+Jak widać dla każdego z przypadków MongoDB w wersji 2.8.0-rc0 używając WiredTiger z zlib wypadło lepiej niż dla wersji 2.4.12. Dla bardziej skomplikowanych obliczeń (przypadek drugi) zmiana ta jest dużo bardziej zauważalna.
+
+=====
+
+#Optymalizacja MapReduce
+
+#modyfikacja skryptu dla sumy kontrolnej oraz ilości kategorii(ModelName):
+
+Należało trochę przerobić skrypt z mapReduce na runCommand:
 ```js
+baza = db.imdb;
 
-``` 
+map = function(){
+  var x = this.modelName;
+  emit(x,1);
+};
 
-Wynik:
+reduce = function(key,values){
+  return Array.sum(values);
+};
+
+var b = baza.runCommand({
+  mapreduce: "imdb",
+  map: map,
+  reduce: reduce,
+  out: "wynik",
+  jsMode: true
+})
+printjson(b);
+```
+
+Wynik jak widać jest ten sam:
+```js
+connecting to: imdb
+{
+	"result" : "wynik",
+	"timeMillis" : 248266,
+	"counts" : {
+		"input" : 19831300,
+		"emit" : 19831300,
+		"reduce" : 324711,
+		"output" : 5
+	},
+	"ok" : 1
+}
+```
+
+Następnie trzeba przerobić program na wielowątkowy:
 ```js
 
 ```
-
-Rodajów kategorii było 5.
-
-Czas:
-```js
-
-```
-
-Porównanie wyników:
-
-| Baza Danych                           | suma kontrolna   | najczestrze slowa | inicjały       |     ilosc     |
-|---------------------------------------|------------------|-------------------|----------------|---------------|
-| MongoDB v 2.4.12                      |  real 4m42.119s  |  real 13m48.508s  | real 7m9.886s  |  |
-| MongoDB v 2.8.0-rc0 WiredTiger (zlib) |  real 4m02.421s  |  real 11m64.542s  | real 6m43.553s |    |
-
-
-
