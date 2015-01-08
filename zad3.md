@@ -153,13 +153,22 @@ connecting to: imdb
 
 Rodajów kategorii było 5.
 
+```js
+db.wynik.find().limit(5)
+{ "_id" : "tv_shows", "value" : 9737305 }
+{ "_id" : "movies", "value" : 6568019 }
+{ "_id" : "undefined", "value" : 56 }
+{ "_id" : "topics", "value" : 23 }
+{ "_id" : "recording_artists", "value" : 11 }
+```js
+
 Czas:
 ```js
 real	4m42.119s
 user	0m0.039s
 sys	0m0.016s
 ```
-#najczęśćiej używane słowa w tytułach
+#zliczenie używanych tytułów
 
 Skrypt
 ```js
@@ -197,6 +206,30 @@ Wynik:
 	"ok" : 1,
 }
 ```
+Przykładowe rekordy
+```
+db.wynik.find().limit(20)
+{ "_id" : "!Viva Hollywood!", "value" : 2 }
+{ "_id" : "!Women Art Revolution", "value" : 2 }
+{ "_id" : "\"...First Do No Harm\"", "value" : 1 }
+{ "_id" : "\"Alien Nation\" at TV.com", "value" : 4 }
+{ "_id" : "\"The Girl Who Kicked The Hornet's Nest", "value" : 1 }
+{ "_id" : "\"Weird Al\" Yankovic Live! - The Alpocalypse Tour", "value" : 1 }
+{ "_id" : "\"iCarly\" iGo to Japan", "value" : 7 }
+{ "_id" : "\"the SHed show\" with Andy Dick", "value" : 1 }
+{ "_id" : "#1 Cheerleader Camp", "value" : 7 }
+{ "_id" : "#1 Single", "value" : 1 }
+{ "_id" : "#TheYear With Katie Couric", "value" : 252 }
+{ "_id" : "$#*! My Dad Says", "value" : 1406 }
+{ "_id" : "$1.98 Beauty Show", "value" : 1 }
+{ "_id" : "$10,000 Pyramid", "value" : 2 }
+{ "_id" : "$100 Makeover", "value" : 3 }
+{ "_id" : "$40 A Day", "value" : 75 }
+{ "_id" : "$5 Cover", "value" : 1060 }
+{ "_id" : "$5 a Day", "value" : 62 }
+{ "_id" : "$9.99", "value" : 18 }
+{ "_id" : "$h*! My Dad Says", "value" : 3 }
+```js
 
 Czas:
 ```js
@@ -213,7 +246,7 @@ baza = db.imdb;
 
 map = function(key,values){
   if (this.modelName == "movies") {
-  this.director.match(/\b\w/g).forEach(function(word) {
+  this.director.match(/\b\w/g).join("").forEach(function(word) {
      emit(word,1);
   });}
 };
@@ -236,13 +269,24 @@ connecting to: imdb
 		"input" : 19831300,
 		"emit" : 13756198,
 		"reduce" : 1017539,
-		"output" : 56
+		"output" : 41456
 	},
 	"ok" : 1,
 }
 ```
 
-Rodajów kategorii było 5.
+Przykładowe rekordy
+```
+> db.wynik.find().limit(2000)
+...
+{ "_id" : "IA", "value" : 641 }
+{ "_id" : "IB", "value" : 112 }
+{ "_id" : "IC", "value" : 146 }
+{ "_id" : "ID", "value" : 2764 }
+{ "_id" : "IE", "value" : 241 }
+{ "_id" : "IF", "value" : 6361 }
+...
+```js
 
 Czas:
 ```js
@@ -253,10 +297,10 @@ sys	0m0.018s
 
 #Porównanie wyników:
 
-| Baza Danych                           | suma kontrolna   | najczestrze slowa | inicjały       |
-|---------------------------------------|------------------|-------------------|----------------|
-| MongoDB v 2.4.12                      |  real 4m42.119s  |  real 13m48.508s  | real 7m9.886s  |
-| MongoDB v 2.8.0-rc0 WiredTiger (zlib) |  real 4m02.421s  |  real 11m64.542s  | real 6m43.553s |
+| Baza Danych                           | suma kontrolna   |   używane tytuły   |    inicjały    |
+|---------------------------------------|------------------|--------------------|----------------|
+| MongoDB v 2.4.12                      |  real 4m42.119s  |  real 13m48.508s   | real 7m9.886s  |
+| MongoDB v 2.8.0-rc0 WiredTiger (zlib) |  real 4m02.421s  |  real 11m64.542s   | real 6m43.553s |
 
 Jak widać dla każdego z przypadków MongoDB w wersji 2.8.0-rc0 używając WiredTiger z zlib wypadło lepiej niż dla wersji 2.4.12. Dla bardziej skomplikowanych obliczeń (przypadek drugi) zmiana ta jest dużo bardziej zauważalna.
 
@@ -307,5 +351,109 @@ connecting to: imdb
 
 Następnie trzeba przerobić program na wielowątkowy:
 ```js
+baza = db.imdb;
 
+load("parallel.js");
+
+var res = db.runCommand({
+  splitVector: "imdb.imdb",
+  keyPattern: {_id: 1},
+  maxChunkSizeBytes: 4*1024*1024
+});
+
+var keys = res.splitKeys;
+
+map = function(){
+  var x = this.modelName;
+  emit(x,1);
+};
+
+reduce = function(key,values){
+  return Array.sum(values);
+};
+
+var command = function(min,max){
+ return baza.runCommand({
+    mapreduce: "imdb",
+    map: map,
+    reduce: reduce,
+    out: "wynik"+min,
+    query: {_id: {$gte: min, $lt: max}},
+ })};
+
+var numberCores = 4
+var inc = (Math.floor(keys.length) / numberCores) + 1;
+threads = [];
+//Run MapReduce in threads
+for (var i = 0; i < numberCores; ++i) {
+   var min = (i == 0) ? 0 : keys[i * inc].modelName;
+   var max = (i * inc + inc >= keys.length) ? MaxKey : keys[i * inc + inc].modelName ;
+   print("min:" + min + " max:" + max);
+   var t = new ScopedThread(command, min, max);
+   threads.push(t);
+   t.start()
+}
+//Print results on threads
+for (var i in threads){
+  var t = threads[i];
+  t.join();
+  printjson(t.returnData());
+}
 ```
+
+Otrzymane wyniki (fragment, gdyż było ich za dużo):
+```js
+min:0 max:216321
+min:216321 max:394279
+min:394279 max:642171
+min:642171 max:[object MaxKey]
+connecting to: test
+connecting to: test
+connecting to: test
+connecting to: test
+{
+  "result" : "wynik0",
+    "timeMillis" : 26369,
+    "counts" : {
+        "input" : 524168,
+        "emit" : 524168,
+        "reduce" : 65272,
+        "output" : 5
+    },
+    "ok" : 1
+}
+{
+    "result" : "wynik216321",
+    "timeMillis" : 25731,
+    "counts" : {
+        "input" : 495425,
+        "emit" : 495425,
+        "reduce" : 5326,
+        "output" : 5
+    },
+    "ok" : 1
+}
+{
+    "result" : "wynik394279",
+    "timeMillis" : 19368,
+    "counts" : {
+        "input" : 486525,
+        "emit" : 486525,
+        "reduce" : 1466,
+        "output" : 5
+    },
+    "ok" : 1
+}
+{
+    "result" : "wynik642171",
+    "timeMillis" : 14703,
+    "counts" : {
+        "input" : 456525,
+        "emit" : 456525,
+        "reduce" : 1484,
+        "output" : 5
+    },
+    "ok" : 1
+}
+```
+
