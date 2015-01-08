@@ -116,5 +116,57 @@ switched to db imdb2
 
 =====
 
+#suma kontrolna oraz ilość kategorii(ModelName):
+```js
+baza = db.imdb;
+
+map = function(){
+  var x = this.modelName;
+  emit(x,1);
+};
+
+reduce = function(key,values){
+  return Array.sum(values);
+};
+
+
+var a = baza.mapReduce(map, reduce, {out: "wynik"});
+printjson(a);
+``` 
+
+Wynik:
+```js
+connecting to: imdb
+{
+	"result" : "wynik",
+	"timeMillis" : 282043,
+	"counts" : {
+		"input" : 19831300,
+		"emit" : 19831300,
+		"reduce" : 324535,
+		"output" : 5
+	},
+	"ok" : 1,
+}
+```
+
+Rodajów kategorii było 5.
+
+Czas:
+```js
+real	4m42.119s
+user	0m0.039s
+sys	0m0.016s
+```
+
+#ilość produktów w danej kategorii:
+
+
+
+#powtarzające się inicjały w zakładce director
+
+
+#najczęśćiej używane słowa w tytułach
+
 
 
