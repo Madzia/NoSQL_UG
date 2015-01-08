@@ -53,7 +53,7 @@ time ./mongoimport -d imdb -c imdb --type json --file ../../getglue_sample.json
 ```
 
 Wynik:
-```js
+```sh
 ...
 2015-01-08T00:01:17.973+0100    Progress: 19602500 documents inserted...
 2015-01-08T00:01:18.203+0100    Progress: 19663900 documents inserted...
@@ -69,7 +69,7 @@ sys	0m32.654s
 ```
 
 Sprawdzenie:
-```js
+```sh
 mongo
 MongoDB shell version: 2.8.0-rc0
 connecting to: test
@@ -86,7 +86,7 @@ time mongoimport -d imdb2 -c imdb2 --type json --file getglue_sample.json
 ```
 
 Wynik:
-```js
+```sh
 Thu Jan  8 00:15:54.007 			19602700	18050/second
 Thu Jan  8 00:15:57.005 		Progress: 11367988192/11454208342	99%
 Thu Jan  8 00:15:57.005 			19679900	18071/second
@@ -104,7 +104,7 @@ sys	0m36.657s
 ```
 
 Sprawdzenie:
-```js
+```sh
 mongo
 MongoDB shell version: 2.4.12
 connecting to: test
