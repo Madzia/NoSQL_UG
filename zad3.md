@@ -111,7 +111,7 @@ switched to db imdb2
 | Baza Danych                             |             Czas          | Objętość bazy danych |
 |-----------------------------------------|---------------------------|----------------------|
 | MongoDB v 2.4.12                        |      real: 18m14.128s     |       15.946GB       |
-| MongoDB v 2.8.0-rc0 WiredTiger (zlib)   |      real: 15m12.158      |       12.531GB       |
+| MongoDB v 2.8.0-rc0 WiredTiger (zlib)   |      real: 15m12.158s     |       12.531GB       |
 
 
 =====
@@ -456,4 +456,8 @@ connecting to: test
     "ok" : 1
 }
 ```
+
+| Bez optymalizacji   |       JSMode       | Zapisanie do różnych kolekcji |
+|---------------------|--------------------|-------------------------------|
+|   real 4m02.421s    |   real 3m98.532s   |         real 3m09.963s        |
 
