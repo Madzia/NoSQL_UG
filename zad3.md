@@ -159,46 +159,6 @@ real	4m42.119s
 user	0m0.039s
 sys	0m0.016s
 ```
-
-#ilość produktów w danej kategorii:
-
-Skrypt
-```js
-
-``` 
-
-Wynik:
-```js
-
-```
-
-Rodajów kategorii było 5.
-
-Czas:
-```js
-
-```
-
-#powtarzające się inicjały w zakładce director
-
-Skrypt
-```js
-
-``` 
-
-Wynik:
-```js
-
-```
-
-Rodajów kategorii było 5.
-
-Czas:
-```js
-
-```
-
-
 #najczęśćiej używane słowa w tytułach
 
 Skrypt
@@ -229,8 +189,8 @@ Wynik:
 	"result" : "wynik",
 	"timeMillis" : 828431,
 	"counts" : {
-		"input" : 16305414,
-		"emit" : 16305414,
+		"input" : 19831300,
+		"emit" : 19831300,
 		"reduce" : 2600667,
 		"output" : 52618
 	},
@@ -244,5 +204,71 @@ real	13m48.508s
 user	0m0.045s
 sys	0m0.008s
 ```
+
+#powtarzające się inicjały w zakładce director dla wszystkich filmów
+
+Skrypt
+```js
+baza = db.imdb;
+
+map = function(key,values){
+  if (this.modelName == "movies") {
+  this.director.match(/\b\w/g).forEach(function(word) {
+     emit(word,1);
+  });}
+};
+
+reduce = function(key,values){
+return Array.sum(values);
+};
+
+var a = baza.mapReduce(map, reduce, {out: "wynik"});
+printjson(a);
+``` 
+
+Wynik:
+```js
+connecting to: imdb
+{
+	"result" : "wynik",
+	"timeMillis" : 429832,
+	"counts" : {
+		"input" : 16305414,
+		"emit" : 13756198,
+		"reduce" : 1017539,
+		"output" : 56
+	},
+	"ok" : 1,
+}
+```
+
+Rodajów kategorii było 5.
+
+Czas:
+```js
+real	7m9.886s
+user	0m0.036s
+sys	0m0.018s
+```
+
+#ilość produktów w danej kategorii:
+
+Skrypt
+```js
+
+``` 
+
+Wynik:
+```js
+
+```
+
+Rodajów kategorii było 5.
+
+Czas:
+```js
+
+```
+
 
 
