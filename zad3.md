@@ -14,7 +14,7 @@ Sprzęt: Procesor Intel Core i5-M 450 @ 2.40GHz × 4 Dysk HDD 500 GB. Pamięć R
 
 Przykładowy dokument `json`:
 
-```json
+```js
 {
   "_id": ObjectId("5374418642gf2a2b34540421"),
   "comment": "", 
@@ -37,7 +37,7 @@ Przykładowy dokument `json`:
 ```
 
 Po rozpakowaniu ściągniętego pliku z danymi poleceniem:
-```json
+```js
 tar -xf getglue_sample.tar.gz
 ```
 
@@ -47,13 +47,13 @@ Należy dane wczytać do bazy danych. Wykorzystana w tym celu będzie wersja Mon
 
 ##Wczytanie danych do bazy Mongo 2.8.0.rc0 + wiredtiger + zlib
 
-```json
+```js
 ./mongod --storageEngine=wiredtiger --wiredTigerCollectionConfig=zlib
 time ./mongoimport -d imdb -c imdb --type json --file ../../getglue_sample.json
 ```
 
 Wynik:
-```json
+```js
 ...
 2015-01-08T00:01:17.973+0100    Progress: 19602500 documents inserted...
 2015-01-08T00:01:18.203+0100    Progress: 19663900 documents inserted...
@@ -62,25 +62,31 @@ Wynik:
 ```
 
 Czas:
-```json
+```js
 real	15m12.158s
 user	6m12.119s
 sys	0m32.654s
 ```
 
 Sprawdzenie:
-```json
-
+```js
+mongo
+MongoDB shell version: 2.8.0-rc0
+connecting to: test
+> use imdb
+switched to db imdb2
+> db.imdb.count()
+19831300
 ```
 
 ##Wczytanie danych do bazy Mongo 2.4.12
 
-```json
+```js
 time mongoimport -d imdb2 -c imdb2 --type json --file getglue_sample.json
 ```
 
 Wynik:
-```json
+```js
 Thu Jan  8 00:15:54.007 			19602700	18050/second
 Thu Jan  8 00:15:57.005 		Progress: 11367988192/11454208342	99%
 Thu Jan  8 00:15:57.005 			19679900	18071/second
@@ -91,14 +97,14 @@ Thu Jan  8 00:16:02.792 imported 19831300 objects
 ```
 
 Czas:
-```json
+```js
 real	18m14.128s
 user	7m18.132s
 sys	0m36.657s
 ```
 
 Sprawdzenie:
-```json
+```js
 mongo
 MongoDB shell version: 2.4.12
 connecting to: test
@@ -160,7 +166,7 @@ db.wynik.find().limit(5)
 { "_id" : "undefined", "value" : 56 }
 { "_id" : "topics", "value" : 23 }
 { "_id" : "recording_artists", "value" : 11 }
-```js
+```
 
 Czas:
 ```js
@@ -229,7 +235,7 @@ db.wynik.find().limit(20)
 { "_id" : "$5 a Day", "value" : 62 }
 { "_id" : "$9.99", "value" : 18 }
 { "_id" : "$h*! My Dad Says", "value" : 3 }
-```js
+```
 
 Czas:
 ```js
@@ -286,7 +292,7 @@ Przykładowe rekordy
 { "_id" : "IE", "value" : 241 }
 { "_id" : "IF", "value" : 6361 }
 ...
-```js
+```
 
 Czas:
 ```js
