@@ -213,7 +213,7 @@ Wynik:
 }
 ```
 Przykładowe rekordy
-```
+```js
 db.wynik.find().limit(20)
 { "_id" : "!Viva Hollywood!", "value" : 2 }
 { "_id" : "!Women Art Revolution", "value" : 2 }
@@ -282,7 +282,7 @@ connecting to: imdb
 ```
 
 Przykładowe rekordy
-```
+```js
 > db.wynik.find().limit(2000)
 ...
 { "_id" : "IA", "value" : 641 }
@@ -466,4 +466,6 @@ connecting to: test
 | Bez optymalizacji   |       JSMode       | Zapisanie do różnych kolekcji |
 |---------------------|--------------------|-------------------------------|
 |   real 4m02.421s    |   real 3m98.532s   |         real 3m09.963s        |
+
+Jak łatwo zaobserwować dużo lepiej korzystać z programowania współbieżnego, lecz już samo zastosowanie JSMode poprawiło (niewiele) czas działania.
 
