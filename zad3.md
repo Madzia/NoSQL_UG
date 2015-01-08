@@ -270,5 +270,12 @@ Czas:
 
 ```
 
+Porównanie wyników:
+
+| Baza Danych                           | suma kontrolna   | najczestrze slowa | inicjały       |     ilosc     |
+|---------------------------------------|------------------|-------------------|----------------|---------------|
+| MongoDB v 2.4.12                      |  real 4m42.119s  |  real 13m48.508s  | real 7m9.886s  |  |
+| MongoDB v 2.8.0-rc0 WiredTiger (zlib) |  real 4m02.421s  |  real 11m64.542s  | real 6m43.553s |    |
+
 
 
