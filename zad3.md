@@ -466,9 +466,8 @@ connecting to: test
 }
 ```
 
-|                 | MongoDB 2.4.12 | Mongo 2.8.0.rc0     |  Mongo 2.8.0.rc0   |   Mongo 2.8.0.rc0             |
-|-----------------|----------------|---------------------|--------------------|-------------------------------|
-| Rodzaj problemu |                | Bez optymalizacji   |       JSMode       | Zapisanie do różnych kolekcji |
+| Rodzaj problemu | MongoDB 2.4.12 | Mongo 2.8.0.rc0     |  Mongo 2.8.0.rc0   |   Mongo 2.8.0.rc0             |
+|                 |                | Bez optymalizacji   |       JSMode       | Zapisanie do różnych kolekcji |
 |-----------------|----------------|---------------------|--------------------|-------------------------------|
 |    kategorie    |                |   real 4m02.421s    |   real 3m98.532s   |         real 3m09.963s        |
 
