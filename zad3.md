@@ -114,7 +114,7 @@ switched to db imdb2
 19831300
 ```
 
-| Baza Danych                             | Czas rzeczywisty | Czas systemowy | Czas sys Objętość bazy danych |
+| Baza Danych                             | Czas rzeczywisty | Czas systemowy | Objętość bazy danych |
 |-----------------------------------------|------------------|----------------|----------------------|
 | MongoDB v 2.4.12                        |    18m14.128s    |   0m36.657s    |        15.946GB      |
 | MongoDB v 2.8.0-rc0 WiredTiger (zlib)   |    15m12.158s    |   0m32.654s    |        12.531GB      |
@@ -491,16 +491,66 @@ connecting to: test
 }
 ```
 
+Pozostałe skrypty zostały przekształcone w sposób adekwatny (JSMode ON) - poprzez wykorzystanie tego samego kodu, modyfikując funkcje map, reduce , runCommand:
+
+-dla użyte tytuły:
+
+```js
+map = function(){
+  var x = this.title;
+  emit(x,1);
+};
+
+reduce = function(key,values){
+  var result = 0;
+  values.forEach(function(item){
+     result += item;
+  });
+  return result;
+};
+
+var b = baza.runCommand({
+  mapreduce: "imdb",
+  map: map,
+  reduce: reduce,
+  out: "wynik",
+  jsMode: true
+})
+```
+
+-dla inicjały
+```js
+map = function(key, values){
+  if (this.modelName == "movies") {
+  this.director.match(/\b\w/g).join("").forEach(function(word) {
+     emit(word,1);
+  });}
+};
+
+reduce = function(key,values){
+  return Array.sum(values);
+};
+
+var b = baza.runCommand({
+  mapreduce: "imdb",
+  map: map,
+  reduce: reduce,
+  out: "wynik",
+  jsMode: true
+})
+```
+
+
 Zestawienie wyników: 
 
 | Rodzaj problemu | MongoDB 2.4.12 | Mongo 2.8.0.rc0 - Bez optymalizacji | Mongo 2.8.0.rc0 - JSMode |   Mongo 2.8.0.rc0 - Zapisanie do różnych kolekcji |
 |-----------------|----------------|---------------------|--------------------|-------------------------------|
-| kategorie - czas rzeczywisty      | 4m42.119s  | 4m02.421s  | 3m98.532s | 3m09.963s |
-| kategorie - czas systemowy        | 0m0.016s   | 0m0.011s   | 0m0.0631s | 0m0.051s  |
-| używane tytuły - czas rzeczywisty | 13m48.508s | 11m64.542s |  |  |
-| używane tytuły - czas systemowy   | 0m0.008s   | 0m0.051s   |  |  |
-| inicjały - czas rzeczywisty       | 7m9.886s   | 6m43.553s  |  |  |
-| inicjały - czas systemowy         | 0m0.018s   | 0m0.015s   |  |  |
+| kategorie - czas rzeczywisty      | 4m42.119s  | 4m02.421s  | 3m98.532s  | 3m09.963s |
+| kategorie - czas systemowy        | 0m0.016s   | 0m0.011s   | 0m0.0631s  | 0m0.051s  |
+| używane tytuły - czas rzeczywisty | 13m48.508s | 11m64.542s | 11m21.625s |  |
+| używane tytuły - czas systemowy   | 0m0.008s   | 0m0.051s   | 0m0.513s   |  |
+| inicjały - czas rzeczywisty       | 7m9.886s   | 6m43.553s  | 6m0.542s   |  |
+| inicjały - czas systemowy         | 0m0.018s   | 0m0.015s   | 0m0.063s   |  |
 
 
 
