@@ -114,10 +114,10 @@ switched to db imdb2
 19831300
 ```
 
-| Baza Danych                             |             Czas          | Objętość bazy danych |
-|-----------------------------------------|---------------------------|----------------------|
-| MongoDB v 2.4.12                        |      real: 18m14.128s     |       15.946GB       |
-| MongoDB v 2.8.0-rc0 WiredTiger (zlib)   |      real: 15m12.158s     |       12.531GB       |
+| Baza Danych                             | Czas rzeczywisty | Czas systemowy | Czas sys Objętość bazy danych |
+|-----------------------------------------|------------------|----------------|----------------------|
+| MongoDB v 2.4.12                        |    18m14.128s    |   0m36.657s    |        15.946GB      |
+| MongoDB v 2.8.0-rc0 WiredTiger (zlib)   |    15m12.158s    |   0m32.654s    |        12.531GB      |
 
 
 =====
@@ -168,7 +168,15 @@ db.wynik.find().limit(5)
 { "_id" : "recording_artists", "value" : 11 }
 ```
 
-Czas:
+Czas dla Mongo 2.8.0.rc0:
+```js
+real	4m02.421s
+user	0m0.052s
+sys	0m0.011s
+```
+
+
+Czas dla Mongo 2.4.12:
 ```js
 real	4m42.119s
 user	0m0.039s
@@ -240,12 +248,20 @@ db.wynik.find().limit(20)
 { "_id" : "$h*! My Dad Says", "value" : 3 }
 ```
 
-Czas:
+Czas dla Mongo 2.8.0.rc0:
+```js
+real	11m64.542s
+user	0m0.031s
+sys	0m0.051s
+```
+
+Czas Mongo 2.4.12:
 ```js
 real	13m48.508s
 user	0m0.045s
 sys	0m0.008s
 ```
+
 
 #powtarzające się inicjały w zakładce director dla wszystkich filmów
 
@@ -297,7 +313,14 @@ Przykładowe rekordy
 ...
 ```
 
-Czas:
+Czas dla Mongo 2.8.0.rc0:
+```js
+real	6m643.553s
+user	0m0.026s
+sys	0m0.015s
+```
+
+Czas  Mongo 2.4.12:
 ```js
 real	7m9.886s
 user	0m0.036s
@@ -308,8 +331,10 @@ sys	0m0.018s
 
 | Baza Danych                           | suma kontrolna   |   używane tytuły   |    inicjały    |
 |---------------------------------------|------------------|--------------------|----------------|
-| MongoDB v 2.4.12                      |  real 4m42.119s  |  real 13m48.508s   | real 7m9.886s  |
-| MongoDB v 2.8.0-rc0 WiredTiger (zlib) |  real 4m02.421s  |  real 11m64.542s   | real 6m43.553s |
+| MongoDB v 2.4.12 - czas rzeczywisty   |    4m42.119s     |     13m48.508s     |    7m9.886s    |
+| MongoDB v 2.4.12 - czas systemowy     |    0m0.016s      |     0m0.008s       |    0m0.018s    |
+| MongoDB v 2.8.0-rc0 WiredTiger (zlib) - czas rzeczywisty |  4m02.421s  |  11m64.542s   | 6m43.553s |
+| MongoDB v 2.8.0-rc0 WiredTiger (zlib) - czas systemowy   |  0m0.011s   |  0m0.051s     | 0m0.015s  |
 
 Jak widać dla każdego z przypadków MongoDB w wersji 2.8.0-rc0 używając WiredTiger z zlib wypadło lepiej niż dla wersji 2.4.12. Dla bardziej skomplikowanych obliczeń (przypadek drugi) zmiana ta jest dużo bardziej zauważalna.
 
@@ -466,9 +491,17 @@ connecting to: test
 }
 ```
 
+Zestawienie wyników: 
+
 | Rodzaj problemu | MongoDB 2.4.12 | Mongo 2.8.0.rc0 - Bez optymalizacji | Mongo 2.8.0.rc0 - JSMode |   Mongo 2.8.0.rc0 - Zapisanie do różnych kolekcji |
 |-----------------|----------------|---------------------|--------------------|-------------------------------|
-|    kategorie    |                |   real 4m02.421s    |   real 3m98.532s   |         real 3m09.963s        |
+| kategorie - czas rzeczywisty      | 4m42.119s  | 4m02.421s  | 3m98.532s | 3m09.963s |
+| kategorie - czas systemowy        | 0m0.016s   | 0m0.011s   | 0m0.0631s | 0m0.051s  |
+| używane tytuły - czas rzeczywisty | 13m48.508s | 11m64.542s |  |  |
+| używane tytuły - czas systemowy   | 0m0.008s   | 0m0.051s   |  |  |
+| inicjały - czas rzeczywisty       | 7m9.886s   | 6m43.553s  |  |  |
+| inicjały - czas systemowy         | 0m0.018s   | 0m0.015s   |  |  |
+
 
 
 
