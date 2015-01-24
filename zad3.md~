@@ -466,14 +466,9 @@ connecting to: test
 }
 ```
 
-|                 | MongoDB 2.4.12 | Mongo 2.8.0.rc0                                                          |
-|-----------------|----------------|--------------------------------------------------------------------------|
-| Rodzaj problemu |                | Bez optymalizacji   |       JSMode       | Zapisanie do różnych kolekcji |
-|-----------------|----------------|---------------------|--------------------|-------------------------------|
-|    kategorie    |                |   real 4m02.421s    |   real 3m98.532s   |         real 3m09.963s        |
-
-
-
+| Bez optymalizacji   |       JSMode       | Zapisanie do różnych kolekcji |
+|---------------------|--------------------|-------------------------------|
+|   real 4m02.421s    |   real 3m98.532s   |         real 3m09.963s        |
 
 Jak łatwo zaobserwować dużo lepiej korzystać z programowania współbieżnego, lecz już samo zastosowanie JSMode poprawiło (niewiele) czas działania.
 
