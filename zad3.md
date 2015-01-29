@@ -544,7 +544,7 @@ var b = baza.runCommand({
 Zestawienie wyników: 
 
 | Rodzaj problemu | MongoDB 2.4.12 - Bez optymalizacji | Mongo 2.4.12 - JSMode | Mongo 2.8.0.rc0 - Bez optymalizacji | Mongo 2.8.0.rc0 - JSMode |   Mongo 2.8.0.rc0 - Zapisanie do różnych kolekcji |
-|-----------------|----------------|---------------------|--------------------|-------------------------------|
+|-----------------|----------------|----------|---------------------|--------------------|-------------------------------|
 | kategorie - czas rzeczywisty      | 4m42.119s  | 3m99.741s  | 4m02.421s  | 3m98.532s  | 3m9.963s |
 | kategorie - czas systemowy        | 0m0.016s   | 0m0.091s   | 0m0.011s   | 0m0.0631s  | 0m0.051s  |
 | używane tytuły - czas rzeczywisty | 13m48.508s | 11m91.521s | 11m64.542s | 11m21.625s | 10m51.641s |
